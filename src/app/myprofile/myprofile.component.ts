@@ -21,9 +21,19 @@ export class MyprofileComponent implements OnInit, OnDestroy {
   private wordIntervalId: any;
 
   isMobile: boolean = window.innerWidth <= 768;
+  // Mostrar/ocultar botones según scroll (true = visible)
+  showButtonsVisible: boolean = true;
+  private lastScrollTop: number = 0;
+  // Filtro seleccionado: 'buy' | 'rent' | null
+  selectedFilter: 'buy' | 'rent' | null = null;
+
+  // pequeño throttle para scroll
+  private ticking = false;
 
   ngOnInit(): void {
     this.startWordAnimation();
+    // inicializar último scroll (usar siempre para coherencia)
+    this.lastScrollTop = window.pageYOffset || document.documentElement.scrollTop || 0;
 
     // 🌟 Detectar viewport (animaciones móviles)
     if (this.isMobile) {
@@ -41,6 +51,34 @@ export class MyprofileComponent implements OnInit, OnDestroy {
         );
         observer.observe(target);
       }
+    }
+  }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    const st = window.pageYOffset || document.documentElement.scrollTop || 0;
+    if (!this.ticking) {
+      window.requestAnimationFrame(() => {
+        // Mostrar/ocultar: solo ocultar si el scroll baja lo suficiente
+        const hideOffset = 160; // px desde top para empezar a ocultar
+        const delta = 10; // sensibilidad vertical
+        if (st > this.lastScrollTop + delta && st > hideOffset) {
+          this.showButtonsVisible = false;
+        } else if (st < this.lastScrollTop - delta) {
+          this.showButtonsVisible = true;
+        }
+        this.lastScrollTop = st <= 0 ? 0 : st;
+        this.ticking = false;
+      });
+      this.ticking = true;
+    }
+  }
+
+  toggleFilter(which: 'buy' | 'rent') {
+    if (this.selectedFilter === which) {
+      this.selectedFilter = null;
+    } else {
+      this.selectedFilter = which;
     }
   }
 

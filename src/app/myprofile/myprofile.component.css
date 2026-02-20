@@ -1,7 +1,7 @@
 /* 🌟 SECCIÓN PRINCIPAL (PORTADA) */
 .myprofile {
   width: 100%;
-  height: 100vh;
+  height: 110vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,35 +12,31 @@
   font-family: var(--font-title);
 }
 
-/* 🌌 NUEVO FONDO ANIMADO CON CÍRCULOS FLOTANTES */
-.container {
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translateX(-50%);
-  height: 70%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 0;
-  /* Detrás del texto */
-  width: 100%;
+.texto-portada {
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin-top: 12px;
+  color: var(--color-second);
 }
 
-.item {
+/* Imagen de fondo dentro del contenedor: ocupa todo el contenedor sin afectar el flujo */
+.myprofile img.background-image {
   position: absolute;
-  background-color: transparent;
-  width: calc(var(--i) * 9vmin);
-  height: calc(var(--i) * 5vmin);
-  border-radius: 50%;
-  border: 0.4vmin solid var(--color-title);
-  transform-style: preserve-3d;
-  transform: rotateX(70deg) translateZ(50px);
-  animation: my-move 3s ease-in-out calc(var(--i) * 0.08s) infinite;
-  box-shadow: 0px 0px 8px var(--color-title),
-    inset 0px 0px 8px var(--color-title);
-  opacity: 0.3;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* cambia a 'contain' si prefieres ver la imagen completa sin recorte */
+  object-position: center;
+  z-index: 1;
 }
+
+/* Opcional: un leve sombreado sobre la imagen para mejorar legibilidad */
+.myprofile .overlay {
+  background: rgba(0, 0, 0, 0.18);
+}
+
+
 
 @keyframes my-move {
 
@@ -80,22 +76,6 @@
   letter-spacing: 2px;
   position: relative;
   z-index: 3;
-}
-
-/* ✨ Palabra dinámica */
-.highlight {
-  background: var(--color-title);
-  background-size: 200% auto;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-style: italic;
-  font-weight: 900;
-  display: inline-block;
-  animation: gradientShift 6s linear infinite;
-  transition: opacity 0.8s ease, transform 0.8s ease;
-  opacity: 1;
-  position: relative;
 }
 
 
@@ -206,4 +186,170 @@
       inset 0px 0px 8px var(--color-title);
     opacity: 0.3;
   }
+}
+
+/* ----------------- CTA: Comprar / Alquilar ----------------- */
+.cta-area {
+  margin-top: 22px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  z-index: 4;
+  transition: opacity 350ms ease, transform 350ms ease;
+}
+
+.cta-area { margin-bottom: 64px; }
+
+.cta-area.hidden {
+  opacity: 0;
+  transform: translateY(-18px) scale(0.98);
+  pointer-events: none;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.btn {
+  padding: 12px 22px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
+}
+
+.btn:hover { transform: translateY(-3px); }
+
+.btn-buy {
+  background: var(--color-main2);
+  color: #fff;
+}
+
+.btn-rent {
+  background: var(--color-main2);
+  color: #fff;
+}
+
+
+.filters {
+  margin-top: 14px;
+  background: rgba(255,255,255,0.98);
+  padding: 14px;
+  border-radius: 12px;
+  width: min(1100px, 96%);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.32);
+  color: #222;
+  transform-origin: top center;
+  animation: slideDown 300ms ease;
+}
+
+/* Grid layout para filtros: horizontal y alineado */
+.filters-form {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 0.9fr 0.9fr auto;
+  gap: 12px;
+  align-items: center;
+}
+
+.filters-form input,
+.filters-form select {
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0.08);
+  background: #fff;
+  width: 100%;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+  font-size: 0.95rem;
+}
+
+.filters-form .price-range {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.filters-form .actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-search {
+  background: linear-gradient(90deg, var(--color-main), var(--color-main2));
+  color: white;
+  padding: 10px 18px;
+  border-radius: 10px;
+}
+
+.price-range {
+  display: flex;
+  gap: 8px;
+
+}
+
+
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px) scaleY(0.98); }
+  to { opacity: 1; transform: translateY(0) scaleY(1); }
+}
+
+/* ----------------- BOTTOM DECORATIVE WAVES ----------------- */
+.bottom-decor {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -28px; /* push a bit below the hero so buttons/filters have breathing room */
+  width: 100%;
+  height: auto;
+  z-index: 1; /* keep behind overlay/CTA */
+  pointer-events: none;
+  transition: opacity 420ms cubic-bezier(.2,.9,.2,1), transform 420ms cubic-bezier(.2,.9,.2,1);
+  opacity: 1;
+}
+
+.bottom-decor.hidden {
+  opacity: 0;
+  transform: translateY(60px) scale(0.995);
+}
+
+.decor-svg { width: 100%; height: 160px; display: block; }
+.decor-svg .layer { transition: transform 420ms ease, opacity 420ms ease; }
+.decor-svg .layer-top { fill: var(--color-second); opacity: 0.98; }
+.decor-svg .layer-mid { fill: var(--color-main2); opacity: 0.95; }
+.decor-svg .layer-bottom { fill: var(--color-main) }
+
+/* small parallax-like movement on load for a more natural effect */
+.bottom-decor .layer-top { transform: translateY(0); }
+.bottom-decor .layer-mid { transform: translateY(4px); }
+.bottom-decor .layer-bottom { transform: translateY(8px); }
+
+@media (max-width: 900px) {
+  .decor-svg { height: 120px; }
+}
+
+@media (max-width: 480px) {
+  .decor-svg { height: 96px; }
+}
+
+/* Mobile tweaks */
+@media (max-width: 900px) {
+  .filters-form {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .intro-text { font-size: 1.6rem; }
+  .filters { width: 94%; padding: 10px; }
+  .filters-form { grid-template-columns: 1fr; gap: 10px; }
+  .filters-form input, .filters-form select { padding: 10px; }
+  .cta-buttons { gap: 8px; }
+  .filters-form .actions { justify-content: center; }
 }

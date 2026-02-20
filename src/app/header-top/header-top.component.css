@@ -1,119 +1,77 @@
 /* Tubelight Navbar Styles */
 .tubelight-navbar {
   position: fixed;
-  bottom: auto;
-  top: 2rem;
-  left: 50%;
-  transform: translateX(-50%) scaleX(1);
-  transform-origin: center;
+  top: 0;
+  left: 0;
+  width: 100%;
   z-index: 50;
-  margin-bottom: 0;
-  width: auto;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  transition: transform 0.35s ease, opacity 0.25s ease;
   opacity: 1;
+  background-color: var(--color-main); /* usa color definido en :root */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
 }
 
 .tubelight-navbar.hidden-nav {
-  transform: translateX(-50%) scaleX(0);
+  transform: translateY(-120%);
   opacity: 0;
   pointer-events: none;
 }
 
 /* Logo Styles */
-.logo-container {
-  position: absolute;
-  top: 7.5rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 49;
-  /* Below navbar if they overlap, but usually separate */
-  transition: all 0.3s ease;
+.navbar-inner {
+  max-width: 1200px;
+  height: 60px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
 }
+
+.logo-wrap a { display: inline-flex; align-items:center; }
 
 .lion-logo {
-  width: 100px;
-  /* Elegant size for mobile */
-  height: auto;
-  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
-}
-
-@media (min-width: 770px) {
-  .tubelight-navbar {
-    top: 0;
-    bottom: auto;
-    margin-bottom: 0;
-    padding-top: 1.5rem;
-  }
-
-  .logo-container {
-    top: 1.5rem;
-    left: 2rem;
-    /* Side positioning for desktop */
-    transform: none;
-  }
-
-  .lion-logo {
-    width: 100px;
-    /* Slightly larger for desktop */
-  }
+  height: 60px;
+  width: auto;
+  display: block;
 }
 
 .navbar-container {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  background-color: rgba(var(--color-main-rgb), 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  padding: 0.25rem;
-  padding-left: 0.25rem;
-  padding-right: 0.25rem;
-  border-radius: 9999px;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  gap: 1rem; /* más separación entre items */
+  padding-left: 0.5rem;
 }
 
 .nav-item {
   position: relative;
   cursor: pointer;
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   font-weight: 600;
-  padding: 0.5rem 1.5rem;
-  border-radius: 9999px;
-  transition: color 0.3s ease;
-  color: rgba(255, 255, 255, 0.8);
-  /* Adjust based on theme */
+  padding: 0.45rem 0.9rem;
+  transition: color 220ms ease, transform 220ms ease, box-shadow 220ms ease;
+  color: rgba(255, 255, 255, 0.95);
   text-decoration: none;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
+  border-radius: 8px;
 }
 
+/* Hover moderno y sutil */
 .nav-item:hover {
   color: var(--color-second);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.18);
 }
 
-.nav-item.active {
-  color: var(--color-second);
-  background-color: rgba(255, 255, 255, 0.1);
-}
+.nav-item.active { color: var(--color-second); }
 
-.nav-text {
-  display: none;
-}
-
-.nav-icon {
-  display: inline-block;
-}
+.nav-text { display: none; font-size: 0.9rem; letter-spacing: 0.3px; }
+.nav-icon { display: inline-block; }
 
 @media (min-width: 769px) {
-  .nav-text {
-    display: inline;
-  }
-
-  .nav-icon {
-    display: none;
-  }
+  .nav-text { display: inline-block; }
+  .nav-icon { display: none; }
 }
 
 /* Lamp Effect */

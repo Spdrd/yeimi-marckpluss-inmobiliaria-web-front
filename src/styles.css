@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700;900&family=Montserrat:wght@300;400;500;700;800&family=Inter:wght@300;400;500;700&display=swap');
+
 :root {
-  --color-main: #401014;
+  --color-main: #340d10;
   --color-main-rgb: 6, 5, 14;
   --color-main2: #691420;
-  --color-second: #691420;
+  --color-second: #e6e7e9;
   --color-second-rgb: 235, 94, 40;
   --color-title: #e6e7e9;
   --color-title-rgb: 218, 194, 158;
@@ -20,9 +22,9 @@
   --sidebar-mobile: 140px;
 
   /* Typography */
-  --font-title: 'Outfit', sans-serif;
-  --font-subtitle: 'Plus Jakarta Sans', sans-serif;
-  --font-text: 'Inter', sans-serif;
+  --font-title: 'Playfair Display', serif; /* Títulos (Display) */
+  --font-subtitle: 'Montserrat', 'Inter', sans-serif; /* Subtítulos */
+  --font-text: 'Montserrat', 'Inter', sans-serif; /* Cuerpo y datos */
 }
 
 

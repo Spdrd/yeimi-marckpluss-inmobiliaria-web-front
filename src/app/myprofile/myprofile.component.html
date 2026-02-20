@@ -1,36 +1,68 @@
 <div class="myprofile">
-  <!-- Fondo animado -->
-  <div class="container">
-    <div class="item" style="--i:0;"></div>
-    <div class="item" style="--i:1;"></div>
-    <div class="item" style="--i:2;"></div>
-    <div class="item" style="--i:3;"></div>
-    <div class="item" style="--i:4;"></div>
-    <div class="item" style="--i:5;"></div>
-    <div class="item" style="--i:6;"></div>
-    <div class="item" style="--i:7;"></div>
-    <div class="item" style="--i:8;"></div>
-    <div class="item" style="--i:9;"></div>
-    <div class="item" style="--i:10;"></div>
-    <div class="item" style="--i:11;"></div>
-    <div class="item" style="--i:12;"></div>
-    <div class="item" style="--i:13;"></div>
-    <div class="item" style="--i:14;"></div>
-    <div class="item" style="--i:15;"></div>
-    <div class="item" style="--i:16;"></div>
-    <div class="item" style="--i:17;"></div>
-    <div class="item" style="--i:18;"></div>
-    <div class="item" style="--i:19;"></div>
-    <div class="item" style="--i:20;"></div>
-  </div>
-
-
+  <img src="assets/images/casitas.jpg" alt="Portada" class="background-image" />
   <!-- Texto y overlay encima -->
   <div class="overlay">
     <h1 class="intro-text">
       Inmobiliaria MarckPlus <br>
-      <span class="highlight">{{ currentWord }}</span>
+      <p class="texto-portada">El lugar de tus sueños, te lo tenemos aquí</p>
+      
     </h1>
+    <!-- Botones Comprar / Alquilar -->
+    <div class="cta-area" [class.hidden]="!showButtonsVisible">
+      <div class="cta-buttons">
+        <button class="btn btn-buy" (click)="toggleFilter('buy')">Comprar</button>
+        <button class="btn btn-rent" (click)="toggleFilter('rent')">Alquilar</button>
+      </div>
+
+      <!-- Filtros para Comprar -->
+      <div class="filters" *ngIf="selectedFilter === 'buy'">
+        <form class="filters-form" (submit)="$event.preventDefault()">
+          <input type="text" placeholder="Ubicación" name="location" />
+          <select name="propertyType">
+            <option value="">Tipo de propiedad</option>
+            <option>Casa</option>
+            <option>Apartamento</option>
+            <option>Terreno</option>
+          </select>
+          <input type="number" placeholder="Tamaño (m²)" name="size" />
+          <div class="price-range">
+            <input type="number" placeholder="Precio mínimo" name="priceMin" />
+            <input type="number" placeholder="Precio máximo" name="priceMax" />
+          </div>
+          <div class="actions">
+            <button class="btn btn-search">Buscar</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Filtros para Alquilar -->
+      <div class="filters" *ngIf="selectedFilter === 'rent'">
+        <form class="filters-form" (submit)="$event.preventDefault()">
+          <input type="text" placeholder="Ubicación" name="location" />
+          <select name="leaseTerm">
+            <option value="">Plazo</option>
+            <option>Mensual</option>
+            <option>Anual</option>
+          </select>
+          <input type="number" placeholder="Tamaño (m²)" name="size" />
+          <div class="price-range">
+            <input type="number" placeholder="Precio mínimo" name="priceMin" />
+            <input type="number" placeholder="Precio máximo" name="priceMax" />
+          </div>
+          <div class="actions">
+            <button class="btn btn-search">Buscar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- Decorative layered curve at bottom (dynamic) -->
+  <div class="bottom-decor" [class.hidden]="!showButtonsVisible" aria-hidden="true">
+    <svg viewBox="0 0 1440 200" preserveAspectRatio="none" class="decor-svg">
+      <path class="layer layer-top" d="M0,80 C220,20 420,140 720,120 C1000,102 1220,30 1440,90 L1440,200 L0,200 Z"></path>
+      <path class="layer layer-mid" d="M0,110 C200,60 420,20 720,60 C1000,98 1220,150 1440,120 L1440,200 L0,200 Z"></path>
+      <path class="layer layer-bottom" d="M0,140 C200,120 420,160 720,140 C1000,120 1220,90 1440,140 L1440,200 L0,200 Z"></path>
+    </svg>
   </div>
 </div>
 

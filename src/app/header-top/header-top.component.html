@@ -1,23 +1,28 @@
-<!-- <div class="logo-container">
-  <img class="lion-logo" src="assets/images/logonew2.png" alt="Logo">
-</div> -->
 <div class="tubelight-navbar" [class.hidden-nav]="isHidden">
-  <div class="navbar-container">
-    <a *ngFor="let item of navItems" [href]="item.url" (click)="setActiveTab(item.name, $event)" class="nav-item"
-      [class.active]="activeTab === item.name">
+  <div class="navbar-inner">
+    <div class="logo-wrap">
+      <a href="/">
+        <img class="lion-logo" src="assets/images/logoblanco.png" alt="Logo">
+      </a>
+    </div>
 
-      <span class="nav-text d-none d-md-inline">{{ item.name }}</span>
-      <span class="nav-icon d-md-none">
-        <i [class]="item.icon"></i>
-      </span>
+    <div class="navbar-container">
+      <a *ngFor="let item of navItems" [href]="item.url" (click)="setActiveTab(item.name, $event)" class="nav-item"
+        [class.active]="activeTab === item.name">
 
-      <div *ngIf="activeTab === item.name" class="lamp-effect">
-        <div class="lamp-base">
-          <div class="lamp-light"></div>
-          <div class="lamp-glow-top"></div>
-          <div class="lamp-glow-bottom"></div>
+        <span class="nav-text">{{ item.name }}</span>
+        <span class="nav-icon d-md-none">
+          <i [class]="item.icon"></i>
+        </span>
+
+        <div *ngIf="activeTab === item.name" class="lamp-effect" aria-hidden="true">
+          <div class="lamp-base">
+            <div class="lamp-light"></div>
+            <div class="lamp-glow-top"></div>
+            <div class="lamp-glow-bottom"></div>
+          </div>
         </div>
-      </div>
-    </a>
+      </a>
+    </div>
   </div>
 </div>
