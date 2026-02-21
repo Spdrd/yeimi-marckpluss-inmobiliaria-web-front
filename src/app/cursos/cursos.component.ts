@@ -6,15 +6,68 @@ import { Component, OnInit, OnDestroy, HostListener, ViewChild, ElementRef, Afte
   styleUrls: ['./cursos.component.css']
 })
 export class CursosComponent implements OnInit, OnDestroy, AfterViewInit {
-  // 🌟 Cursos (carrusel)
-  courses = [
-    { image: 'https://www.isotools.us/wp-content/uploads/2024/06/Software-para-sistemas-de-gestion-de-calidad-que-caracteristicas-y-funcionalidades-debe-reunir.jpg', title: 'Calidad del Software - Sena', description: 'Curso en el Sena sobre la calidad del Software y las diferentes normas ISO', modalidad: 'Online' },
-    { image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAMBwFp4blXgNy24gKGab6WDL8IiVktJNvgQ&s', title: 'Nube de AWS', description: 'Curso ofrecido por AWS para saber manejar su nube y poder elegir correctamente entre todos los servicios que ofrece', modalidad: 'Online' },
-    { image: 'https://www.javeriana.edu.co/recursosdb/704339/6116923/Mesa%20de%20trabajo%2099%20copia%203.png/52cb4ae7-0b89-8087-1af3-e8ce7ed92796', title: 'Javeriana Territorio Emprendedor', description: 'Participé en el programa "Javeriana Territorio Emprendedor".', modalidad: 'Presencial' },
-    { image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3Pw9vZvgrTOe4Z3OLIwdOjQqXmM5bgKz1Hw&s', title: 'Prompting Responsable - Microsoft', description: 'Curso de prompting responsable en IA, desarrollado por Microsoft y Founderz.', modalidad: 'Online' },
-    { image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFmSHVHNeO1x6dCPXq5d1Fb_33f9UXdbaonw&s', title: 'Ingles B1 - American School Way', description: 'Hice un curso en American School Way donde alcance un nivel B1 en Ingles', modalidad: 'Presencial' },
-    { image: 'https://www.ucatalunya.edu.co/img/blog/la-transformacion-digital.jpg', title: 'Transformación Digital - MIT', description: 'Curso de Transformación Digital para empresas, MIT Professional Education.', modalidad: 'Online' },
-    { image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNCObqnzWneBa0iTZsC5rsLKuI9YbZPUBUKw&s', title: 'Integración de IA en Sitios Web', description: 'Integración de herramientas de IA en Sitios Web, como lo son chatbots, IA para análisis de datos y IA para análisis de imágenes', modalidad: 'Online' }
+  // 🌟 Datos de ejemplo: ahora representan inmuebles (puedes editar estos objetos)
+  estate = [
+    {
+      image: 'https://images.unsplash.com/photo-1560184897-e8a8f7f2c9b2?w=1200&q=80&auto=format&fit=crop',
+      name: 'Casa Modernista en Chapinero',
+      price: 8312500,
+      priceFormatted: '$ 8,312,500',
+      description: 'Amplia casa de 3 habitaciones con acabados de lujo, patio interno y garaje para 2 vehículos. Ideal para familias.',
+      location: 'Chapinero, Bogotá',
+      area: '886 sqft',
+      rooms: 3,
+      baths: 2,
+      
+    },
+    {
+      image: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=1200&q=80&auto=format&fit=crop',
+      name: 'Apartamento con vista al río',
+      price: 13512002,
+      priceFormatted: '$ 13,512,002',
+      description: 'Apartamento moderno con balcón, 2 habitaciones, cocina abierta y parqueadero privado.',
+      location: 'Barranquilla - Centro',
+      area: '120 m²',
+      rooms: 2,
+      baths: 2,
+      
+    },
+    {
+      image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80&auto=format&fit=crop',
+      name: 'Casa en la montaña',
+      price: 6805,
+      priceFormatted: '$ 6,805',
+      description: 'Finca pequeña con vista panorámica, 2 habitaciones y amplia zona verde. Perfecta para descanso.',
+      location: 'Medellín - Alto de las Palmas',
+      area: '1500 m²',
+      rooms: 2,
+      baths: 1,
+      
+    },
+    {
+      image: 'https://images.unsplash.com/photo-1598928506311-5c1a45b9d3e9?w=1200&q=80&auto=format&fit=crop',
+      name: 'Loft céntrico',
+      price: 420000,
+      priceFormatted: '$ 420,000',
+      description: 'Loft de un solo ambiente, ideal para profesionales, con acabados minimalistas y buena iluminación natural.',
+      location: 'Cali - Zona G',
+      area: '55 m²',
+      rooms: 1,
+      baths: 1,
+      
+    },
+    {
+      image: 'https://images.unsplash.com/photo-1600585154343-6c8a8b9e3d7b?w=1200&q=80&auto=format&fit=crop',
+      name: 'Departamento de lujo',
+      price: 2150000,
+      priceFormatted: '$ 2,150,000',
+      description: 'Departamento con 3 dormitorios, 2 baños, cocina equipada y terraza con asador.',
+      location: 'Santa Marta - Rodadero',
+      area: '140 m²',
+      rooms: 3,
+      baths: 2,
+      
+    }
   ];
 
   currentIndex = 0;
@@ -256,21 +309,21 @@ export class CursosComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private setupSlides(): void {
     const v = this.visibleCards;
-    const c = this.courses.length;
+    const c = this.estate.length;
     // when there are fewer courses than visible cards, just replicate to avoid blank space
     if (c <= v) {
       // duplicate courses enough times
       this.slides = [];
       while (this.slides.length < v * 3) {
-        this.slides = this.slides.concat(this.courses);
+        this.slides = this.slides.concat(this.estate);
       }
       this.currentIndex = 0;
       return;
     }
 
-    const head = this.courses.slice(-v);
-    const tail = this.courses.slice(0, v);
-    this.slides = [...head, ...this.courses, ...tail];
+    const head = this.estate.slice(-v);
+    const tail = this.estate.slice(0, v);
+    this.slides = [...head, ...this.estate, ...tail];
 
     // start at first real slide (offset by head clones)
     this.currentIndex = v;
@@ -280,7 +333,7 @@ export class CursosComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onTransitionEnd(): void {
     const v = this.visibleCards;
-    const c = this.courses.length;
+    const c = this.estate.length;
     // if moved past the real slides on the right
     if (this.currentIndex >= v + c) {
       // jump back by removing c
@@ -328,4 +381,6 @@ export class CursosComponent implements OnInit, OnDestroy, AfterViewInit {
       setTimeout(() => track.style.transition = '', 20);
     }
   }
+
+  // favorites removed
 }

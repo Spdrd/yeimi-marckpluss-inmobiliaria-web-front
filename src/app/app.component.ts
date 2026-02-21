@@ -12,7 +12,7 @@ export class AppComponent {
   sidebarOpen: boolean = false;
 
   @HostListener('window:scroll', [])
-  onWindowScroll() {
+  /*onWindowScroll() {
     if (this.isMobile) {
       // en celular no aplica scroll effect
       this.showTopHeader = true;
@@ -35,7 +35,7 @@ export class AppComponent {
       this.showTopHeader = true;
       this.layoutConSidebar = false;
     }
-  }
+  }*/
 
   @HostListener('window:resize', [])
   onResize() {

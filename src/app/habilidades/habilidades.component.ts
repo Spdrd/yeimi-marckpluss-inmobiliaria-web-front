@@ -14,6 +14,88 @@ export class HabilidadesComponent implements AfterViewInit, OnDestroy {
     this.resizeHandler = this.debounce(() => this.equalizeCardHeights(), 120);
   }
 
+  // --- Propiedades de ejemplo para mostrar en tarjetas ---
+  public properties: any[] = [
+    {
+      idpro: 3524764,
+      address: 'Cra. 6A No. 50 - 36',
+      city: 'Bogotá',
+      neighborhood: 'Chapinero Alto',
+      type: 'APARTAMENTO',
+      biz: 'VENTA',
+      area_cons: 66,
+      bedrooms: 3,
+      bathrooms: 2,
+      price: 440000000,
+      price_format: '440.000.000',
+      image1: 'https://s3-us-west-2.amazonaws.com/pictures.domus.la/inmobiliaria_183/5431_1_1771454244.jpg',
+      description: 'Apartamento en venta Chapinero Alto 66Mts., 2 habitaciones grandes, terraza pequeña cubierta, cocina integral y parqueadero cubierto.'
+    },
+    {
+      idpro: 3524770,
+      address: 'Av. 19 No. 95 - 20',
+      city: 'Bogotá',
+      neighborhood: 'Usaquén',
+      type: 'APARTAMENTO',
+      biz: 'VENTA',
+      area_cons: 120,
+      bedrooms: 4,
+      bathrooms: 3,
+      price: 1250000000,
+      price_format: '1.250.000.000',
+      image1: 'https://via.placeholder.com/640x420.png?text=Propiedad+1',
+      description: 'Amplio apartamento con excelentes acabados, vigilancia y parqueadero doble.'
+    },
+    {
+      idpro: 3524780,
+      address: 'Cll 85 No. 12 - 45',
+      city: 'Bogotá',
+      neighborhood: 'Chico',
+      type: 'APARTAMENTO',
+      biz: 'ALQUILER',
+      area_cons: 88,
+      bedrooms: 2,
+      bathrooms: 2,
+      price: 3400000,
+      price_format: '$3.400.000',
+      image1: 'https://via.placeholder.com/640x420.png?text=Propiedad+2',
+      description: 'Apartamento amoblado en el norte de la ciudad, cerca a zonas comerciales.'
+    }
+  ];
+
+  // filtros del formulario
+  public filters: any = {
+    biz: 'VENTA', // VENTA | ALQUILER
+    city: '',
+    type: '',
+    bedrooms: null,
+    bathrooms: null,
+    minPrice: null,
+    maxPrice: null
+  };
+
+  get filteredProperties(): any[] {
+    return this.properties.filter(p => {
+      // filtrar por tipo de negocio (venta/alquiler)
+      if (this.filters.biz && p.biz !== this.filters.biz) return false;
+      if (this.filters.city && p.city.toLowerCase().indexOf(this.filters.city.toLowerCase()) === -1) return false;
+      if (this.filters.type && p.type !== this.filters.type) return false;
+      if (this.filters.bedrooms && p.bedrooms !== +this.filters.bedrooms) return false;
+      if (this.filters.bathrooms && p.bathrooms !== +this.filters.bathrooms) return false;
+      if (this.filters.minPrice && p.price < +this.filters.minPrice) return false;
+      if (this.filters.maxPrice && p.price > +this.filters.maxPrice) return false;
+      return true;
+    });
+  }
+
+  public setBiz(b: string) {
+    this.filters.biz = b;
+  }
+
+  public resetFilters() {
+    this.filters = { biz: this.filters.biz, city: '', type: '', bedrooms: null, bathrooms: null, minPrice: null, maxPrice: null };
+  }
+
   ngAfterViewInit(): void {
     const cards = this.el.nativeElement.querySelectorAll('.card');
 

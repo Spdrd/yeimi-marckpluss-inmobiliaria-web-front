@@ -7,52 +7,10 @@
       <p class="texto-portada">El lugar de tus sueños, te lo tenemos aquí</p>
       
     </h1>
-    <!-- Botones Comprar / Alquilar -->
-    <div class="cta-area" [class.hidden]="!showButtonsVisible">
+    <!-- Boton de comprar -->
+    <div class="cta-area" aria-hidden="false">
       <div class="cta-buttons">
-        <button class="btn btn-buy" (click)="toggleFilter('buy')">Comprar</button>
-        <button class="btn btn-rent" (click)="toggleFilter('rent')">Alquilar</button>
-      </div>
-
-      <!-- Filtros para Comprar -->
-      <div class="filters" *ngIf="selectedFilter === 'buy'">
-        <form class="filters-form" (submit)="$event.preventDefault()">
-          <input type="text" placeholder="Ubicación" name="location" />
-          <select name="propertyType">
-            <option value="">Tipo de propiedad</option>
-            <option>Casa</option>
-            <option>Apartamento</option>
-            <option>Terreno</option>
-          </select>
-          <input type="number" placeholder="Tamaño (m²)" name="size" />
-          <div class="price-range">
-            <input type="number" placeholder="Precio mínimo" name="priceMin" />
-            <input type="number" placeholder="Precio máximo" name="priceMax" />
-          </div>
-          <div class="actions">
-            <button class="btn btn-search">Buscar</button>
-          </div>
-        </form>
-      </div>
-
-      <!-- Filtros para Alquilar -->
-      <div class="filters" *ngIf="selectedFilter === 'rent'">
-        <form class="filters-form" (submit)="$event.preventDefault()">
-          <input type="text" placeholder="Ubicación" name="location" />
-          <select name="leaseTerm">
-            <option value="">Plazo</option>
-            <option>Mensual</option>
-            <option>Anual</option>
-          </select>
-          <input type="number" placeholder="Tamaño (m²)" name="size" />
-          <div class="price-range">
-            <input type="number" placeholder="Precio mínimo" name="priceMin" />
-            <input type="number" placeholder="Precio máximo" name="priceMax" />
-          </div>
-          <div class="actions">
-            <button class="btn btn-search">Buscar</button>
-          </div>
-        </form>
+        <a href="#filtrar-propiedades" class="button2" aria-label="Quiero mi propiedad">Quiero mi propiedad</a>
       </div>
     </div>
   </div>
@@ -67,8 +25,8 @@
 </div>
 
 <app-cursos></app-cursos>
-<app-aboutme></app-aboutme>
 <app-habilidades></app-habilidades>
+<app-aboutme></app-aboutme>
 <app-projects></app-projects>
 <!--<app-experiences></app-experiences>-->
 <app-tech></app-tech>

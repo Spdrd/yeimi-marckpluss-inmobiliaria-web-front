@@ -4,15 +4,16 @@
 
 .courses-section {
   background: var(--color-main);
-  padding: 80px 20px;
+  padding: 10px;
   text-align: center;
   position: relative;
   overflow: hidden;
+  margin-top: 0px;
 }
 
 .section-title2 {
   color: var(--color-title);
-  margin-bottom: 40px;
+  margin-bottom: 1px;
   font-size: 2.5rem;
   font-weight: bold;
 }
@@ -199,163 +200,258 @@ button:active .button-text {
 
 
 /* ============================= */
-/* NUEVO DISEÑO DE TARJETAS */
+/* NUEVO DISEÑO DE TARJETAS - HORIZONTAL */
 /* ============================= */
 
 .card {
-  flex: 0 0 calc(100% / 3); /* 3 tarjetas visibles en desktop */
-  margin: 0 15px;
-  width: 280px;
-  border-radius: 20px;
-  background: var(--color-main2);
-  padding: 5px;
+  position: relative;
+  flex: 0 0 520px; /* ancho fijo para carrusel horizontal */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 0;
+  margin: 0 12px;
+  height: 220px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.02));
+  padding: 0;
   overflow: hidden;
-  box-shadow:var(--color-main2) 0px 7px 20px 0px;
-  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
   opacity: 0;
-  transform: translateY(50px);
-  animation: slideUp 0.8s ease forwards;
+  transform: translateY(20px);
+  animation: slideUp 0.6s ease forwards;
 }
 
+/* favorite-toggle removed */
+
 .card:hover {
-  transform: scale(1.05);
+  transform: translateY(0) scale(1.02);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.22);
 }
 
 .card .top-section {
-  height: 300px;
-  border-radius: 15px;
-  display: flex;
-  flex-direction: column;
-  background: linear-gradient(45deg, var(--color-main2) 0%, var(--color-title) 100%);
-  position: relative;
-}
-
-.card .top-section .border {
-  border-bottom-right-radius: 10px;
-  height: 80px;
-  width: 250px;
-  background: var(--color-main2);
-  position: relative;
-  transform: skew(-40deg);
-  box-shadow: -10px -10px 0 0 var(--color-main2);
-}
-
-.card .top-section .border::before {
-  content: "";
-  position: absolute;
-  width: 15px;
-  height: 15px;
-  top: 0;
-  right: -15px;
-  background: var(--color-main2);
-  border-top-left-radius: 10px;
-  box-shadow: -5px -5px 0 2px var(--color-main2);
-}
-
-.card .top-section::before {
-  content: "";
-  position: absolute;
-  top: 30px;
-  left: 0;
-  background: var(--color-main2);
-  height: 15px;
-  width: 15px;
-  border-top-left-radius: 15px;
-  box-shadow: -5px -5px 0 2px var(--color-main2);
-}
-
-.card .top-section .icons {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: auto;
-  height: 30px;
-  display: flex;
-  justify-content: flex-end;
-  z-index: 3;
-  padding: 8px 15px;
-}
-
-.card .top-section .icons .view-icon {
+  width: 45%;
+  min-width: 45%;
   height: 100%;
-  display: flex;
-  align-items: center;
-}
-
-.card .top-section .icons .view-icon .svg {
-  height: 100%;
-  fill: var(--color-main2);
-  transition: fill 0.3s ease;
-}
-
-.card .top-section .icons .view-icon .svg:hover {
-  fill: var(--color-text2);
+  position: relative;
+  overflow: hidden;
 }
 
 .card .top-section .course-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 .card .top-section .course-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 15px;
-  transition: transform 0.3s ease;
+  display: block;
+  transition: transform 0.4s ease;
 }
 
 .card:hover .top-section .course-image img {
-  transform: scale(1.05);
+  transform: scale(1.06);
 }
 
 .card .bottom-section {
-  margin-top: 15px;
-  padding: 10px 5px;
+  width: 55%;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0));
+}
+
+.card .bottom-section .info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
 }
 
 .card .bottom-section .title {
-  display: block;
-  font-size: 17px;
-  font-weight: bolder;
+  font-size: 1.05rem;
+  font-weight: 700;
   color: var(--color-text2);
-  text-align: center;
-  letter-spacing: 2px;
+  letter-spacing: 0.6px;
 }
 
-.card .bottom-section .row {
+.card .bottom-section .price {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--color-main2);
+  background: rgba(0,0,0,0.03);
+  padding: 6px 10px;
+  border-radius: 8px;
+  align-self: flex-start;
+}
+
+.card .bottom-section .desc {
+  margin-top: 8px;
+  color: var(--color-border);
+  font-size: 0.95rem;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card .bottom-section .meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  color: var(--color-border);
+  font-size: 0.9rem;
+}
+
+.card .bottom-section .location {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-text2);
+  font-weight: 600;
+}
+
+/* Scoped location icon using loader-shape-3 from your snippet */
+.location .loc-icon {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.location .loc-text {
+  font-weight: 600;
+  color: var(--color-text2);
+  font-size: 0.95rem;
+}
+
+.location .loader-shape-3 {
+  position: relative;
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+}
+.location .loader-shape-3:after,
+.location .loader-shape-3:before {
+  position: absolute;
+  content: "";
+}
+.location .loader-shape-3:after {
+  width: 14px;
+  height: 10px;
+  border-radius: 100%;
+  background-color: rgba(255, 255, 255, 0.12);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin-top: 6px;
+}
+.location .loader-shape-3:before {
+  width: 12px;
+  height: 12px;
+  border-radius: 100% 100% 100% 0;
+  box-shadow: 0px 0px 0px 2px var(--color-main2);
+  animation: anm-SL-3-move 1s linear infinite;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-46deg);
+  margin-top: 8px;
+}
+
+@keyframes anm-SL-3-move {
+  0% { top: 0; }
+  50% { top: -4px; }
+  100% { top: 0; }
+}
+
+/* Price badge over image */
+.card .top-section .price-badge {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  background: var(--color-main2);
+  color: var(--color-text2);
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-weight: 800;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+  z-index: 5;
+}
+
+/* Header and stats */
+.card .bottom-section .header-row {
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
+  align-items: center;
 }
 
-.card .bottom-section .row .item {
-  flex: 30%;
-  text-align: center;
-  padding: 5px;
+.card .bottom-section .title {
+  font-family: var(--font-title);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--color-title);
+  line-height: 1.05;
+}
+
+.card .bottom-section .desc {
+  font-family: var(--font-text);
   color: var(--color-border);
+  margin-top: 8px;
+  font-size: 0.98rem;
+  line-height: 1.45;
 }
 
-.card .bottom-section .row .item .big-text {
-  font-size: 12px;
-  display: block;
-  font-weight: bold;
+.card .bottom-section .stats-row {
+  display: flex;
+  gap: 14px;
+  margin-top: 10px;
+  color: var(--color-border);
+  font-family: var(--font-subtitle);
+  font-size: 0.92rem;
 }
 
-.card .bottom-section .row .item .regular-text {
-  font-size: 9px;
+.card .bottom-section .stat {
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
 
-.card .bottom-section .row .item:nth-child(2) {
-  border-left: 1px solid rgba(255, 255, 255, 0.126);
-  border-right: 1px solid rgba(255, 255, 255, 0.126);
+.card .bottom-section .stat-icon { font-size: 1rem; }
+
+/* favorite-toggle removed */
+
+/* Ajustes para carrusel y tamaños */
+@media (max-width: 1024px) {
+  .card { flex: 0 0 440px; height: 200px; }
+}
+
+@media (max-width: 768px) {
+  .card {
+    flex: 0 0 calc(100% / 1.05);
+    height: 260px;
+    display: flex;
+    flex-direction: column;
+    width: auto;
+  }
+
+  .card .top-section { width: 100%; min-width: 100%; height: 140px; }
+  .card .bottom-section { width: 100%; padding: 14px; }
+
+  .carousel-btn { display: none; }
+  .carousel { margin-left: 10px; margin-right: 10px; }
+}
+
+@media (max-width: 375px) {
+  .card { height: auto; }
+  .card .top-section { height: 160px; }
 }
 
 /* Botón base (posición y hover ya la tienes definida) */
