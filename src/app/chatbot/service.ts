@@ -14,7 +14,6 @@ export class ChatService {
 
   constructor(private http: HttpClient) {
     this.baseUrl = enviroment.chatbotApiUrl;
-    this.apiKey = enviroment.chatbotApiKey;
   }
 
   sendMessage(message: string): Observable<ChatResponse> {
