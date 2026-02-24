@@ -9,8 +9,8 @@ export class ContactComponent {
 
   // 🌟 Contacto
   contactMethods = [
-    { icon: 'fas fa-envelope', title: 'Email', value: 'dafelepe10@gmail.com' },
-    { icon: 'fas fa-phone', title: 'Teléfono', value: '+57 318 2018 778' },
+    { icon: 'fas fa-envelope', title: 'Email', value: 'correo@marckpluss.com' },
+    { icon: 'fas fa-phone', title: 'Teléfono', value: '+57 555 2018 778' },
     { icon: 'fas fa-map-marker-alt', title: 'Ubicación', value: 'Bogotá, Colombia' },
     { icon: 'fas fa-calendar', title: 'Disponibilidad', value: 'Lun - Vie, 9AM - 6PM' }
   ];

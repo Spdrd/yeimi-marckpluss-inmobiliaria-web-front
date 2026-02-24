@@ -15,21 +15,62 @@ export class AboutmeComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('aboutRight', { static: false }) aboutRight!: ElementRef;
   private resizeTimeout: any;
 
-  // Logros destacados
   logros = [
-    { icon: 'fas fa-users', title: 'Trabajo en Equipo', description: 'Colaboración en proyectos universitarios y extracurriculares' },
-    { icon: 'fas fa-book-open', title: 'Aprendizaje Continuo', description: 'Me gusta aprender cosas nuevas y ser curioso' },
-    { icon: 'fas fa-comments', title: 'Habilidades de Comunicación', description: 'Capaz de explicar conceptos técnicos a audiencias no técnicas' },
-    { icon: 'fas fa-sync-alt', title: 'Adaptabilidad', description: 'Me adapto rápidamente a nuevas tecnologías y entornos de trabajo' },
-    { icon: 'fas fa-lightbulb', title: 'Pensamiento Crítico', description: 'Habilidad para analizar problemas y encontrar soluciones efectivas' },
-    { icon: 'fas fa-clock', title: 'Gestión del Tiempo', description: 'Capaz de manejar múltiples tareas y cumplir con los plazos' },
-    { icon: 'fas fa-paint-brush', title: 'Creatividad', description: 'Aporto ideas innovadoras en proyectos y soluciones' },
-    { icon: 'fas fa-user-tie', title: 'Liderazgo', description: 'Experiencia liderando equipos en proyectos universitarios' },
-    { icon: 'fas fa-mountain', title: 'Resiliencia', description: 'Capaz de superar desafíos y aprender de los errores' },
-    { icon: 'fas fa-laptop-code', title: 'Habilidades Técnicas', description: 'Conocimiento en lenguajes de programación y herramientas tecnológicas' },
-    { icon: 'fas fa-heart', title: 'Empatía', description: 'Capaz de entender y compartir los sentimientos de los demás' },
-    { icon: 'fas fa-handshake-angle', title: 'Habilidades de Negociación', description: 'Capaz de llegar a acuerdos beneficiosos en situaciones de conflicto' },
-    { icon: 'fas fa-project-diagram', title: 'Pensamiento Estratégico', description: 'Capaz de planificar a largo plazo y anticipar desafíos futuros' }
+    {
+      icon: 'fas fa-handshake',
+      title: 'Acompañamiento Personalizado',
+      description: 'Asesoría cercana y profesional durante todo el proceso de venta o arriendo.'
+    },
+    {
+      icon: 'fas fa-shield-alt',
+      title: 'Transparencia',
+      description: 'Procesos claros, información detallada y comunicación constante en cada etapa.'
+    },
+    {
+      icon: 'fas fa-home',
+      title: 'Experiencia en el Mercado',
+      description: 'Conocimiento profundo del mercado inmobiliario, especialmente en Bogotá.'
+    },
+    {
+      icon: 'fas fa-chart-line',
+      title: 'Estrategia Comercial',
+      description: 'Planes de comercialización efectivos para maximizar la visibilidad y el valor de cada propiedad.'
+    },
+    {
+      icon: 'fas fa-camera',
+      title: 'Marketing Inmobiliario',
+      description: 'Promoción digital y posicionamiento estratégico de inmuebles.'
+    },
+    {
+      icon: 'fas fa-users',
+      title: 'Red de Contactos',
+      description: 'Amplia base de compradores, arrendatarios e inversionistas potenciales.'
+    },
+    {
+      icon: 'fas fa-clock',
+      title: 'Agilidad en Procesos',
+      description: 'Gestión eficiente para reducir tiempos de cierre sin comprometer la calidad.'
+    },
+    {
+      icon: 'fas fa-comments',
+      title: 'Comunicación Efectiva',
+      description: 'Atención oportuna y seguimiento constante a propietarios y clientes.'
+    },
+    {
+      icon: 'fas fa-building',
+      title: 'Cobertura Nacional',
+      description: 'Intermediación de ventas y arriendos a nivel nacional con enfoque en Bogotá.'
+    },
+    {
+      icon: 'fas fa-search-dollar',
+      title: 'Valoración Profesional',
+      description: 'Análisis de mercado para establecer precios competitivos y atractivos.'
+    },
+    {
+      icon: 'fas fa-heart',
+      title: 'Confianza y Cercanía',
+      description: 'Construimos relaciones basadas en el respeto, la ética y el compromiso.'
+    }
   ];
 
   // Duplicamos logros para crear efecto infinito en el carrusel
@@ -37,7 +78,7 @@ export class AboutmeComponent implements OnInit, AfterViewInit, OnDestroy {
     return [...this.logros, ...this.logros];
   }
 
-  constructor(private el: ElementRef, private renderer: Renderer2) {}
+  constructor(private el: ElementRef, private renderer: Renderer2) { }
 
   ngOnInit() {
     // Activamos animación solo cuando la sección está visible
