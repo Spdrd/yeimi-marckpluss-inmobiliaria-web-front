@@ -90,4 +90,7 @@ export interface Property {
   image2_wm: string;
   image3: string;
   image3_wm: string;
+
+  currentImageIndex?: number;
+  images?: string[];
 }
