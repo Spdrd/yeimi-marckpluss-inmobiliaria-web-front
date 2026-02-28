@@ -1,4 +1,6 @@
 import { Component, AfterViewInit, ElementRef, OnDestroy } from '@angular/core';
+import { PaginatedResponse, Property } from 'src/app/core/models/domus.model';
+import { DomusService } from '../core/service/domus.service';
 
 @Component({
   selector: 'app-habilidades',
@@ -10,153 +12,15 @@ export class HabilidadesComponent implements AfterViewInit, OnDestroy {
   private resizeHandler: () => void;
   private observer: IntersectionObserver | null = null;
 
-  constructor(private el: ElementRef) {
-    this.resizeHandler = this.debounce(() => this.equalizeCardHeights(), 120);
-  }
-
   // --- Propiedades de ejemplo para mostrar en tarjetas ---
-  public properties: any[] = [
-    {
-      idpro: 3524764,
-      address: 'Cra. 6A No. 50 - 36',
-      city: 'Bogotá',
-      neighborhood: 'Chapinero Alto',
-      type: 'APARTAMENTO',
-      biz: 'VENTA',
-      area_cons: 66,
-      bedrooms: 3,
-      bathrooms: 2,
-      price: 440000000,
-      price_format: '440.000.000',
-      images: [
-        'https://s3-us-west-2.amazonaws.com/pictures.domus.la/inmobiliaria_183/5431_1_1771454244.jpg',
-        'https://via.placeholder.com/640x420.png?text=Foto+2',
-        'https://via.placeholder.com/640x420.png?text=Foto+3'
-      ],
-      currentImageIndex: 0,
-      description: 'Apartamento en venta Chapinero Alto 66Mts., 2 habitaciones grandes, terraza pequeña cubierta, cocina integral y parqueadero cubierto.'
-    },
-    {
-      idpro: 3524770,
-      address: 'Av. 19 No. 95 - 20',
-      city: 'Bogotá',
-      neighborhood: 'Usaquén',
-      type: 'APARTAMENTO',
-      biz: 'VENTA',
-      area_cons: 120,
-      bedrooms: 4,
-      bathrooms: 3,
-      price: 1250000000,
-      price_format: '1.250.000.000',
-      images: [
-        'https://via.placeholder.com/640x420.png?text=Propiedad+1',
-        'https://via.placeholder.com/640x420.png?text=Foto+2',
-        'https://via.placeholder.com/640x420.png?text=Foto+3',
-        'https://via.placeholder.com/640x420.png?text=Foto+4'
-      ],
-      currentImageIndex: 0,
-      description: 'Amplio apartamento con excelentes acabados, vigilancia y parqueadero doble.'
-    },
-    {
-      idpro: 3524780,
-      address: 'Cll 85 No. 12 - 45',
-      city: 'Bogotá',
-      neighborhood: 'Chico',
-      type: 'APARTAMENTO',
-      biz: 'ALQUILER',
-      area_cons: 88,
-      bedrooms: 2,
-      bathrooms: 2,
-      price: 3400000,
-      price_format: '$3.400.000',
-      images: [
-        'https://via.placeholder.com/640x420.png?text=Propiedad+2',
-        'https://via.placeholder.com/640x420.png?text=Foto+2'
-      ],
-      currentImageIndex: 0,
-      description: 'Apartamento amoblado en el norte de la ciudad, cerca a zonas comerciales.'
-    },
-    {
-      idpro: 3524764,
-      address: 'Cra. 6A No. 50 - 36',
-      city: 'Bogotá',
-      neighborhood: 'Chapinero Alto',
-      type: 'APARTAMENTO',
-      biz: 'VENTA',
-      area_cons: 66,
-      bedrooms: 3,
-      bathrooms: 2,
-      price: 440000000,
-      price_format: '440.000.000',
-      images: [
-        'https://s3-us-west-2.amazonaws.com/pictures.domus.la/inmobiliaria_183/5431_1_1771454244.jpg',
-        'https://via.placeholder.com/640x420.png?text=Foto+2',
-        'https://via.placeholder.com/640x420.png?text=Foto+3'
-      ],
-      currentImageIndex: 0,
-      description: 'Apartamento en venta Chapinero Alto 66Mts., 2 habitaciones grandes, terraza pequeña cubierta, cocina integral y parqueadero cubierto.'
-    },
-    {
-      idpro: 3524764,
-      address: 'Cra. 6A No. 50 - 36',
-      city: 'Bogotá',
-      neighborhood: 'Chapinero Alto',
-      type: 'APARTAMENTO',
-      biz: 'VENTA',
-      area_cons: 66,
-      bedrooms: 3,
-      bathrooms: 2,
-      price: 440000000,
-      price_format: '440.000.000',
-      images: [
-        'https://s3-us-west-2.amazonaws.com/pictures.domus.la/inmobiliaria_183/5431_1_1771454244.jpg',
-        'https://via.placeholder.com/640x420.png?text=Foto+2',
-        'https://via.placeholder.com/640x420.png?text=Foto+3'
-      ],
-      currentImageIndex: 0,
-      description: 'Apartamento en venta Chapinero Alto 66Mts., 2 habitaciones grandes, terraza pequeña cubierta, cocina integral y parqueadero cubierto.'
-    },
-    {
-      idpro: 3524764,
-      address: 'Cra. 6A No. 50 - 36',
-      city: 'Bogotá',
-      neighborhood: 'Chapinero Alto',
-      type: 'APARTAMENTO',
-      biz: 'VENTA',
-      area_cons: 66,
-      bedrooms: 3,
-      bathrooms: 2,
-      price: 440000000,
-      price_format: '440.000.000',
-      images: [
-        'https://s3-us-west-2.amazonaws.com/pictures.domus.la/inmobiliaria_183/5431_1_1771454244.jpg',
-        'https://via.placeholder.com/640x420.png?text=Foto+2',
-        'https://via.placeholder.com/640x420.png?text=Foto+3'
-      ],
-      currentImageIndex: 0,
-      description: 'Apartamento en venta Chapinero Alto 66Mts., 2 habitaciones grandes, terraza pequeña cubierta, cocina integral y parqueadero cubierto.'
-    },
-    {
-      idpro: 3524764,
-      address: 'Cra. 6A No. 50 - 36',
-      city: 'Bogotá',
-      neighborhood: 'Chapinero Alto',
-      type: 'APARTAMENTO',
-      biz: 'VENTA',
-      area_cons: 66,
-      bedrooms: 3,
-      bathrooms: 2,
-      price: 440000000,
-      price_format: '440.000.000',
-      images: [
-        'https://s3-us-west-2.amazonaws.com/pictures.domus.la/inmobiliaria_183/5431_1_1771454244.jpg',
-        'https://via.placeholder.com/640x420.png?text=Foto+2',
-        'https://via.placeholder.com/640x420.png?text=Foto+3'
-      ],
-      currentImageIndex: 0,
-      description: 'Apartamento en venta Chapinero Alto 66Mts., 2 habitaciones grandes, terraza pequeña cubierta, cocina integral y parqueadero cubierto.'
-    }
-  ];
+  public properties: Property[] = [];
+
+  constructor(private el: ElementRef, private domusService: DomusService) {
+    this.resizeHandler = this.debounce(() => this.equalizeCardHeights(), 120);
+    this.domusService.getProperties().subscribe((response: PaginatedResponse<Property>) => {
+      this.properties = response.data.map(p => ({ ...p, currentImageIndex: 0, images: [p.image1, p.image2, p.image3] }));
+    });
+  }  
 
   // filtros del formulario
   public filters: any = {
@@ -169,6 +33,14 @@ export class HabilidadesComponent implements AfterViewInit, OnDestroy {
     maxPrice: null
   };
 
+  // Estado del dropdown
+  public isTypeDropdownOpen = false;
+  public typeOptions = [
+    { value: '', label: 'Cualquier tipo' },
+    { value: 'APARTAMENTO', label: 'Apartamento' },
+    { value: 'CASA', label: 'Casa' }
+  ];
+
   get filteredProperties(): any[] {
     return this.properties.filter(p => {
       // filtrar por tipo de negocio (venta/alquiler)
@@ -177,8 +49,8 @@ export class HabilidadesComponent implements AfterViewInit, OnDestroy {
       if (this.filters.type && p.type !== this.filters.type) return false;
       if (this.filters.bedrooms && p.bedrooms !== +this.filters.bedrooms) return false;
       if (this.filters.bathrooms && p.bathrooms !== +this.filters.bathrooms) return false;
-      if (this.filters.minPrice && p.price < +this.filters.minPrice) return false;
-      if (this.filters.maxPrice && p.price > +this.filters.maxPrice) return false;
+      if (this.filters.minPrice && Number(p.price) < +this.filters.minPrice) return false;
+      if (this.filters.maxPrice && Number(p.price) > +this.filters.maxPrice) return false;
       return true;
     });
   }
@@ -187,8 +59,23 @@ export class HabilidadesComponent implements AfterViewInit, OnDestroy {
     this.filters.biz = b;
   }
 
+  public toggleTypeDropdown() {
+    this.isTypeDropdownOpen = !this.isTypeDropdownOpen;
+  }
+
+  public selectType(value: string) {
+    this.filters.type = value;
+    this.isTypeDropdownOpen = false;
+  }
+
+  public getTypeLabel() {
+    const selected = this.typeOptions.find(opt => opt.value === this.filters.type);
+    return selected ? selected.label : 'Cualquier tipo';
+  }
+
   public resetFilters() {
     this.filters = { biz: this.filters.biz, city: '', type: '', bedrooms: null, bathrooms: null, minPrice: null, maxPrice: null };
+    this.isTypeDropdownOpen = false;
   }
 
   // Navegación de imágenes en las tarjetas

@@ -98,7 +98,19 @@ export class CursosComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(private renderer: Renderer2, private domusService: DomusService) {
     domusService.getProperties().subscribe({
       next: (response) => {
-        console.log('Propiedades obtenidas:', response);
+        const properties = response.data.map(p => ({ ...p, currentImageIndex: 0, images: [p.image1, p.image2, p.image3] }));
+        this.estate = properties.map(p => ({
+          image: p.image1,
+          name: p.address,
+          price: +p.price,
+          priceFormatted: p.price_format,
+          description: p.description,
+          location: `${p.city} - ${p.zone}`,
+          area: `${p.area_lot} m²`,
+          rooms: p.bedrooms,
+          baths: p.bathrooms
+        }));
+        this.setupSlides();      
       },
       error: (error) => {
         console.error('Error al obtener propiedades:', error);
