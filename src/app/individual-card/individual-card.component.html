@@ -1,0 +1,179 @@
+<div class="property-detail-wrapper" *ngIf="!isLoading && property">
+
+  <div class="property-detail-container">
+    <!-- LADO IZQUIERDO: GALERÍA DE IMÁGENES -->
+    <div class="gallery-section">
+      <div class="main-image-container">
+        <img 
+          [src]="images[currentImageIndex]" 
+          [alt]="property.address"
+          class="main-image"
+        />
+        
+        <!-- Controles de navegación de imágenes -->
+        <div class="gallery-controls" *ngIf="images.length > 1">
+          <button 
+            class="gallery-nav gallery-prev" 
+            (click)="prevImage()"
+            type="button"
+            aria-label="Imagen anterior">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          
+          <button 
+            class="gallery-nav gallery-next" 
+            (click)="nextImage()"
+            type="button"
+            aria-label="Siguiente imagen">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+
+          <!-- Contador de imágenes -->
+          <div class="image-counter">
+            <span class="current">{{ currentImageIndex + 1 }}</span>
+            <span class="separator">/</span>
+            <span class="total">{{ images.length }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Miniaturas -->
+      <div class="thumbnails-container" *ngIf="images.length > 1">
+        <div 
+          *ngFor="let img of images; let i = index"
+          class="thumbnail"
+          [class.active]="i === currentImageIndex"
+          (click)="goToImage(i)">
+          <img [src]="img" [alt]="'Vista ' + (i + 1)" />
+        </div>
+      </div>
+
+      <!-- Botón de retroceso -->
+        <button class="back-button" (click)="goBack()" type="button">
+            <i class="fas fa-arrow-left"></i>
+            <span>Volver al listado</span>
+        </button>
+    </div>
+
+    <!-- LADO DERECHO: INFORMACIÓN DE LA PROPIEDAD -->
+    <div class="info-section">
+      <div class="info-card">
+        <!-- Encabezado con tipo y negocio -->
+        <div class="info-header">
+          <h1 class="property-title">{{ property.type }} en {{ property.biz | lowercase }}</h1>
+          <p class="property-location">
+            <i class="fas fa-map-marker-alt"></i>
+            {{ property.city }} — {{ property.neighborhood }}
+          </p>
+        </div>
+
+        <!-- Precio destacado -->
+        <div class="price-container">
+          <span class="price-amount">${{ property.price_format }}</span>
+          <span class="price-period" *ngIf="property.biz === 'ALQUILER'"> mes</span>
+          <span class="price-badge">{{ property.biz }}</span>
+        </div>
+
+        <!-- Características principales en grid -->
+        <div class="main-features">
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-ruler-combined"></i>
+            </div>
+            <div class="feature-content">
+              <span class="feature-label">Área</span>
+              <span class="feature-value">{{ property.area_cons }} <span class="unit">m²</span></span>
+            </div>
+          </div>
+
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-bed"></i>
+            </div>
+            <div class="feature-content">
+              <span class="feature-label">Habitaciones</span>
+              <span class="feature-value">{{ property.bedrooms }}</span>
+            </div>
+          </div>
+
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-bath"></i>
+            </div>
+            <div class="feature-content">
+              <span class="feature-label">Cuartos de baño</span>
+              <span class="feature-value">{{ property.bathrooms }}</span>
+            </div>
+          </div>
+
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-car"></i>
+            </div>
+            <div class="feature-content">
+              <span class="feature-label">Garajes</span>
+              <span class="feature-value">{{ property.parking || 0 }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tipo de propiedad -->
+        <div class="property-type-badge">
+          <i class="fas fa-home"></i>
+          <span>Tipo: <strong>{{ property.type }}</strong></span>
+        </div>
+
+        <!-- Descripción -->
+        <div class="description-section" *ngIf="property.description">
+          <h3 class="section-title">Descripción</h3>
+          <p class="description-text">{{ property.description }}</p>
+        </div>
+
+        <!-- Detalles adicionales -->
+        <div class="additional-details">
+          <h3 class="section-title">Detalles adicionales</h3>
+          <div class="details-grid">
+            <div class="detail-item" *ngIf="property.area_lot">
+              <span class="detail-label">Área del lote:</span>
+              <span class="detail-value">{{ property.area_lot }} m²</span>
+            </div>
+            <div class="detail-item" *ngIf="property.stratum">
+              <span class="detail-label">Estrato:</span>
+              <span class="detail-value">{{ property.stratum }}</span>
+            </div>
+            <div class="detail-item" *ngIf="property.administration">
+              <span class="detail-label">Administración:</span>
+              <span class="detail-value">${{ property.administration }}</span>
+            </div>
+            <div class="detail-item" *ngIf="property.build_year">
+              <span class="detail-label">Año de construcción:</span>
+              <span class="detail-value">{{ property.build_year }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Código:</span>
+              <span class="detail-value">{{ property.reference }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botones de acción -->
+        <div class="action-buttons">
+          <button class="btn-primary btn-contact" (click)="contactAgent()" type="button">
+            <i class="fas fa-phone"></i>
+            <span>Más detalles</span>
+          </button>
+          <button class="btn-secondary btn-share" (click)="shareProperty()" type="button">
+            <i class="fas fa-share-alt"></i>
+            <span>Compartir</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Indicador de carga -->
+<div class="loading-container" *ngIf="isLoading">
+  <div class="spinner"></div>
+  <p>Cargando propiedad...</p>
+</div>

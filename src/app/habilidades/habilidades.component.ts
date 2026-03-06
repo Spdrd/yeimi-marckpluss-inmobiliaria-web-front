@@ -1,4 +1,5 @@
 import { Component, AfterViewInit, ElementRef, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { PaginatedResponse, Property } from 'src/app/core/models/domus.model';
 import { DomusService } from '../core/service/domus.service';
 
@@ -15,7 +16,7 @@ export class HabilidadesComponent implements AfterViewInit, OnDestroy {
   // --- Propiedades de ejemplo para mostrar en tarjetas ---
   public properties: Property[] = [];
 
-  constructor(private el: ElementRef, private domusService: DomusService) {
+  constructor(private el: ElementRef, private domusService: DomusService, private router: Router) {
     this.resizeHandler = this.debounce(() => this.equalizeCardHeights(), 120);
     this.domusService.getProperties().subscribe((response: PaginatedResponse<Property>) => {
       this.properties = response.data.map(p => ({ ...p, currentImageIndex: 0, images: [p.image1, p.image2, p.image3] }));
@@ -98,6 +99,12 @@ export class HabilidadesComponent implements AfterViewInit, OnDestroy {
       return property.images[property.currentImageIndex];
     }
     return '';
+  }
+
+  // Navegar a la vista de detalles de la propiedad
+  public viewPropertyDetail(property: Property, event: Event): void {
+    event.preventDefault();
+    this.router.navigate(['/propiedad', property.idpro]);
   }
 
   ngAfterViewInit(): void {
