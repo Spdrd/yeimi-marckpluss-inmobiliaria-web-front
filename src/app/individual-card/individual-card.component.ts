@@ -80,6 +80,17 @@ export class IndividualCardComponent implements OnInit {
     this.location.back();
   }
 
+  public goBackToList(): void {
+    this.router.navigate(['/']).then(() => {
+      setTimeout(() => {
+        const element = document.getElementById('filtrar-propiedades');
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    });
+  }
+
   public contactAgent(): void {
     // Implementar lógica para contactar al agente
     // Por ejemplo, abrir WhatsApp o mostrar formulario de contacto
