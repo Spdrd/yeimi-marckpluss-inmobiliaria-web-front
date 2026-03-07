@@ -131,10 +131,15 @@
                   class="stat-value">{{ p.bathrooms }}</span></span>
             </div>
             <div class="card-actions">
-              <a class="btn-buy" href="#" (click)="$event.preventDefault()">Ver detalle</a>
+              <div class="card-actions">
+              <a class="btn-buy" href="#" (click)="viewPropertyDetail(p, $event)">
+                Ver detalle
+              </a>
               <button (click)="enviarWhatsApp(p)" class="btn-secondary" type="button">
+                <i class="fab fa-whatsapp"></i> 
                 Consultar esta propiedad
               </button>
+            </div>
             </div>
           </div>
         </div>
