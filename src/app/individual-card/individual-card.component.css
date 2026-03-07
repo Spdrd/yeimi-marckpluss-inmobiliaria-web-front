@@ -128,7 +128,7 @@
 }
 
 .gallery-nav:hover {
-  background: rgba(255, 118, 20, 0.9);
+  background: var(--color-main2);
   transform: scale(1.1);
 }
 
@@ -154,7 +154,7 @@
 }
 
 .image-counter .current {
-  color: #ff7614;
+  color: var(--color-main2);
   font-size: 1.1rem;
 }
 
@@ -186,7 +186,7 @@
 }
 
 .thumbnail.active {
-  border-color: #ff7614;
+  border-color: var(--color-main2);
   box-shadow: 0 0 0 2px rgba(255, 118, 20, 0.3);
 }
 
@@ -249,7 +249,7 @@
 }
 
 .property-location i {
-  color: #ff7614;
+  color: var(--color-main2);
 }
 
 /* Precio */
@@ -261,13 +261,13 @@
   padding: 1.5rem;
   background: rgba(255, 118, 20, 0.1);
   border-radius: 12px;
-  border-left: 4px solid #ff7614;
+  border-left: 4px solid var(--color-main2);
 }
 
 .price-amount {
   font-size: 2.2rem;
   font-weight: 800;
-  color: #4ade80;
+  color: var(--color-border);
   letter-spacing: -0.5px;
 }
 
@@ -278,7 +278,7 @@
 }
 
 .price-badge {
-  background: #ff7614;
+  background: var(--color-main2);
   color: white;
   padding: 0.4rem 0.8rem;
   border-radius: 20px;
@@ -314,7 +314,7 @@
 .feature-icon {
   width: 45px;
   height: 45px;
-  background: linear-gradient(135deg, #ff7614 0%, #ff9a56 100%);
+  background: linear-gradient(135deg, var(--color-main2) 0%, var(--color-main2) 100%);
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -364,12 +364,12 @@
 }
 
 .property-type-badge i {
-  color: #ff7614;
+  color: var(--color-main2);
   font-size: 1.1rem;
 }
 
 .property-type-badge strong {
-  color: #ff7614;
+  color: var(--color-border);
   font-weight: 700;
 }
 
@@ -393,7 +393,7 @@
   content: '';
   width: 4px;
   height: 20px;
-  background: #ff7614;
+  background: var(--color-main2);
   border-radius: 2px;
 }
 
@@ -460,14 +460,14 @@
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #ff7614 0%, #ff9a56 100%);
+  background: linear-gradient(135deg, var(--color-main2) 0%, var(--color-main2) 100%);
   color: white;
-  box-shadow: 0 4px 15px rgba(255, 118, 20, 0.4);
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 25px rgba(255, 118, 20, 0.6);
+  box-shadow: 0 6px 25px rgba(255, 255, 255, 0.4);
 }
 
 .btn-secondary {
@@ -500,7 +500,7 @@
   width: 60px;
   height: 60px;
   border: 5px solid rgba(255, 118, 20, 0.2);
-  border-top-color: #ff7614;
+  border-top-color: var(--color-main2);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -511,7 +511,7 @@
 
 .loading-container p {
   font-size: 1.1rem;
-  color: #2c3e50;
+  color: var(--color-border);
   font-weight: 600;
 }
 

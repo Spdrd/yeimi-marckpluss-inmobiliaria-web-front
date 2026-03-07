@@ -697,25 +697,53 @@
   font-size: 0.85rem;
 }
 .card-actions {
-  align-items: center;
   display: flex;
-  justify-content: space-between;
+  gap: 12px;
   margin-top: auto;
 }
 
 .btn-buy {
   align-items: center;
   background: linear-gradient(135deg, var(--color-main) 0%, var(--color-main2) 100%);
-  border-radius: 10px;
+  border-radius: 12px;
   box-shadow: 0 4px 12px var(--color-main);
   color: #fff;
   display: inline-flex;
   font-size: 0.95rem;
   font-weight: 700;
   gap: 8px;
-  padding: 10px 24px;
+  justify-content: center;
+  line-height: 1.2;
+  min-height: 34px;
+  padding: 12px 10px;
+  text-align: center;
   text-decoration: none;
   transition: all 0.3s ease;
+}
+
+.card-actions .btn-buy,
+.card-actions .btn-secondary {
+  align-items: center;
+  border-radius: 12px;
+  display: inline-flex;
+  flex: 1 1 0;
+  justify-content: center;
+  margin: 0;
+  min-height: 30px;
+  padding: 8px 12px;
+  text-align: center;
+}
+
+.card-actions .btn-secondary {
+  font-size: 0.95rem;
+  font-weight: 700;
+  gap: 8px;
+  line-height: 1.2;
+}
+
+.card-actions .btn-secondary i {
+  flex-shrink: 0;
+  font-size: 1rem;
 }
 
 .btn-buy::after {
@@ -726,7 +754,7 @@
 
 .btn-buy:hover {
   box-shadow: 0 6px 16px var(--color-main);
-  transform: translateX(4px);
+  transform: translateY(-2px);
 }
 
 .btn-buy:hover::after {
@@ -828,6 +856,10 @@
   .btn-secondary {
     justify-content: center;
     width: 100%;
+  }
+
+  .card-actions {
+    flex-direction: column;
   }
   
   .property-card {
