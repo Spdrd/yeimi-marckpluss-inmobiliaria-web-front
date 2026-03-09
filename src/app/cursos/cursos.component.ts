@@ -7,69 +7,8 @@ import { DomusService } from '../core/service/domus.service';
   styleUrls: ['./cursos.component.css']
 })
 export class CursosComponent implements OnInit, OnDestroy, AfterViewInit {
-  // 🌟 Datos de ejemplo: ahora representan inmuebles (puedes editar estos objetos)
-  estate = [
-    {
-      image: 'https://images.unsplash.com/photo-1560184897-e8a8f7f2c9b2?w=1200&q=80&auto=format&fit=crop',
-      name: 'Casa Modernista en Chapinero',
-      price: 8312500,
-      priceFormatted: '$ 8,312,500',
-      description: 'Amplia casa de 3 habitaciones con acabados de lujo, patio interno y garaje para 2 vehículos. Ideal para familias.',
-      location: 'Chapinero, Bogotá',
-      area: '886 sqft',
-      rooms: 3,
-      baths: 2,
-      
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=1200&q=80&auto=format&fit=crop',
-      name: 'Apartamento con vista al río',
-      price: 13512002,
-      priceFormatted: '$ 13,512,002',
-      description: 'Apartamento moderno con balcón, 2 habitaciones, cocina abierta y parqueadero privado.',
-      location: 'Barranquilla - Centro',
-      area: '120 m²',
-      rooms: 2,
-      baths: 2,
-      
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80&auto=format&fit=crop',
-      name: 'Casa en la montaña',
-      price: 6805,
-      priceFormatted: '$ 6,805',
-      description: 'Finca pequeña con vista panorámica, 2 habitaciones y amplia zona verde. Perfecta para descanso.',
-      location: 'Medellín - Alto de las Palmas',
-      area: '1500 m²',
-      rooms: 2,
-      baths: 1,
-      
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1598928506311-5c1a45b9d3e9?w=1200&q=80&auto=format&fit=crop',
-      name: 'Loft céntrico',
-      price: 420000,
-      priceFormatted: '$ 420,000',
-      description: 'Loft de un solo ambiente, ideal para profesionales, con acabados minimalistas y buena iluminación natural.',
-      location: 'Cali - Zona G',
-      area: '55 m²',
-      rooms: 1,
-      baths: 1,
-      
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1600585154343-6c8a8b9e3d7b?w=1200&q=80&auto=format&fit=crop',
-      name: 'Departamento de lujo',
-      price: 2150000,
-      priceFormatted: '$ 2,150,000',
-      description: 'Departamento con 3 dormitorios, 2 baños, cocina equipada y terraza con asador.',
-      location: 'Santa Marta - Rodadero',
-      area: '140 m²',
-      rooms: 3,
-      baths: 2,
-      
-    }
-  ];
+  // Se alimenta exclusivamente con inmuebles del API de Domus.
+  estate: any[] = [];
 
   currentIndex = 0;
   visibleCards = 3; // 🌟 número de tarjetas visibles (depende del ancho de pantalla)
@@ -92,6 +31,8 @@ export class CursosComponent implements OnInit, OnDestroy, AfterViewInit {
   private globalMoveUnlisten: (() => void) | null = null;
   private globalUpUnlisten: (() => void) | null = null;
   private globalCancelUnlisten: (() => void) | null = null;
+  private loadedImageUrls = new Set<string>();
+  private failedImageUrls = new Set<string>();
 
   @ViewChild('track', { static: false }) trackRef!: ElementRef<HTMLDivElement>;
   @ViewChild('carousel', { static: false }) carouselRef!: ElementRef<HTMLDivElement>;
@@ -100,13 +41,13 @@ export class CursosComponent implements OnInit, OnDestroy, AfterViewInit {
       next: (response) => {
         const properties = response.data.map(p => ({ ...p, currentImageIndex: 0, images: [p.image1, p.image2, p.image3] }));
         this.estate = properties.map(p => ({
-          image: p.image1,
+          image: p.image1 || p.image2 || p.image3 || '',
           name: p.address,
           price: +p.price,
           priceFormatted: p.price_format,
-          description: p.description,
-          location: `${p.city} - ${p.zone}`,
-          area: `${p.area_lot} m²`,
+          description: p.description || 'Sin descripcion disponible.',
+          location: `${p.city || ''}${p.zone ? ' - ' + p.zone : ''}`.trim(),
+          area: p.area_lot ? `${p.area_lot} m²` : '',
           rooms: p.bedrooms,
           baths: p.bathrooms
         }));
@@ -114,6 +55,8 @@ export class CursosComponent implements OnInit, OnDestroy, AfterViewInit {
       },
       error: (error) => {
         console.error('Error al obtener propiedades:', error);
+        this.estate = [];
+        this.slides = [];
       }
     });
    }
@@ -332,6 +275,15 @@ export class CursosComponent implements OnInit, OnDestroy, AfterViewInit {
   private setupSlides(): void {
     const v = this.visibleCards;
     const c = this.estate.length;
+
+    if (c === 0) {
+      this.slides = [];
+      this.currentIndex = 0;
+      this.currentTranslate = 0;
+      this.updateTranslate(false);
+      return;
+    }
+
     // when there are fewer courses than visible cards, just replicate to avoid blank space
     if (c <= v) {
       // duplicate courses enough times
@@ -356,6 +308,12 @@ export class CursosComponent implements OnInit, OnDestroy, AfterViewInit {
   onTransitionEnd(): void {
     const v = this.visibleCards;
     const c = this.estate.length;
+
+    if (c === 0) {
+      this.isTransitioning = false;
+      return;
+    }
+
     // if moved past the real slides on the right
     if (this.currentIndex >= v + c) {
       // jump back by removing c
@@ -389,6 +347,13 @@ export class CursosComponent implements OnInit, OnDestroy, AfterViewInit {
   private updateTranslate(animate = true): void {
     if (!this.trackRef || !this.carouselRef) return;
     const track = this.trackRef.nativeElement;
+
+    if (this.slides.length === 0) {
+      track.style.transform = 'translateX(0px)';
+      this.currentTranslate = 0;
+      return;
+    }
+
     const px = -this.currentIndex * this.getSlideWidthPx();
     if (!animate) {
       track.style.transition = 'none';
@@ -402,6 +367,28 @@ export class CursosComponent implements OnInit, OnDestroy, AfterViewInit {
       void track.offsetWidth;
       setTimeout(() => track.style.transition = '', 20);
     }
+  }
+
+  onImageLoad(imageUrl?: string): void {
+    if (!imageUrl) return;
+    this.loadedImageUrls.add(imageUrl);
+    this.failedImageUrls.delete(imageUrl);
+  }
+
+  onImageError(imageUrl?: string): void {
+    if (!imageUrl) return;
+    this.failedImageUrls.add(imageUrl);
+    this.loadedImageUrls.add(imageUrl);
+  }
+
+  isImageLoading(imageUrl?: string): boolean {
+    if (!imageUrl) return false;
+    return !this.loadedImageUrls.has(imageUrl);
+  }
+
+  hasImageError(imageUrl?: string): boolean {
+    if (!imageUrl) return true;
+    return this.failedImageUrls.has(imageUrl);
   }
 
   // favorites removed

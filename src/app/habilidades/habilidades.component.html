@@ -86,6 +86,13 @@
 
     <!-- RESULTADOS: TARJETAS DE PROPIEDADES -->
     <section class="skills-section">
+      <div class="properties-loading" *ngIf="isLoadingProperties" role="status" aria-live="polite">
+        <div class="properties-loading-inner">
+          <span class="properties-loading-spinner" aria-hidden="true"></span>
+          <p>Cargando inmuebles...</p>
+        </div>
+      </div>
+
       <div class="skills-grid">
 
         <div class="card property-card" *ngFor="let p of filteredProperties">

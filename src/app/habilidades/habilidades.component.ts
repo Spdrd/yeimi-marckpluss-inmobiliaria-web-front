@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { PaginatedResponse, Property } from 'src/app/core/models/domus.model';
 import { DomusService } from '../core/service/domus.service';
 import { enviroment } from 'src/environments/environment';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-habilidades',
@@ -24,12 +25,22 @@ export class HabilidadesComponent implements AfterViewInit, OnDestroy {
 
   // --- Propiedades de ejemplo para mostrar en tarjetas ---
   public properties: Property[] = [];
+  public isLoadingProperties = true;
 
   constructor(private el: ElementRef, private domusService: DomusService, private router: Router) {
     this.resizeHandler = this.debounce(() => this.equalizeCardHeights(), 120);
-    this.domusService.getProperties().subscribe((response: PaginatedResponse<Property>) => {
-      this.properties = response.data.map(p => ({ ...p, currentImageIndex: 0, images: [p.image1, p.image2, p.image3] }));
-    });
+    this.domusService.getProperties()
+      .pipe(finalize(() => this.isLoadingProperties = false))
+      .subscribe({
+        next: (response: PaginatedResponse<Property>) => {
+          this.properties = response.data.map(p => ({ ...p, currentImageIndex: 0, images: [p.image1, p.image2, p.image3] }));
+          setTimeout(() => this.equalizeCardHeights(), 0);
+        },
+        error: (error) => {
+          console.error('Error al cargar inmuebles en habilidades:', error);
+          this.properties = [];
+        }
+      });
   }
 
   // filtros del formulario

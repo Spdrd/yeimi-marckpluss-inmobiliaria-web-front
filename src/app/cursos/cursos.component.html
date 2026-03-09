@@ -20,7 +20,16 @@
       <div class="card" *ngFor="let course of slides; let i = index">
         <div class="top-section">
           <div class="course-image">
-            <img [src]="course.image" [alt]="(course.name || course.title) + ' - imagen'">
+            <div class="image-loading-overlay" *ngIf="isImageLoading(course.image)">
+              <span class="image-loader" aria-label="Cargando imagen"></span>
+            </div>
+            <div class="image-fallback" *ngIf="hasImageError(course.image)">Imagen no disponible</div>
+            <img
+              [src]="course.image"
+              [alt]="(course.name || course.title) + ' - imagen'"
+              [class.image-hidden]="isImageLoading(course.image)"
+              (load)="onImageLoad(course.image)"
+              (error)="onImageError(course.image)">
             <div class="price-badge">{{ course.priceFormatted || course.price || course.precio }}</div>
           </div>
         </div>
