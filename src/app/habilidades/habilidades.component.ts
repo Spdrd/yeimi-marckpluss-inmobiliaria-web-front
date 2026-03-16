@@ -1,7 +1,9 @@
 import { Component, AfterViewInit, ElementRef, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { PaginatedResponse, Property } from 'src/app/core/models/domus.model';
 import { DomusService } from '../core/service/domus.service';
 import { enviroment } from 'src/environments/environment';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-habilidades',
@@ -9,6 +11,30 @@ import { enviroment } from 'src/environments/environment';
   styleUrls: ['./habilidades.component.css']
 })
 export class HabilidadesComponent implements AfterViewInit, OnDestroy {
+
+  page = 1;
+  pageSize = 3;
+
+  get paginatedProperties(): Property[] {
+    const start = (this.page - 1) * this.pageSize;
+    return this.filteredProperties.slice(start, start + this.pageSize);
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.filteredProperties.length / this.pageSize);
+  }
+
+  nextPage() {
+    if (this.page < this.totalPages) {
+      this.page++;
+    }
+  }
+
+  prevPage() {
+    if (this.page > 1) {
+      this.page--;
+    }
+  }
 
   enviarWhatsApp(property: Property) {
     const numero = enviroment.whatsappNumber;
@@ -23,12 +49,22 @@ export class HabilidadesComponent implements AfterViewInit, OnDestroy {
 
   // --- Propiedades de ejemplo para mostrar en tarjetas ---
   public properties: Property[] = [];
+  public isLoadingProperties = true;
 
-  constructor(private el: ElementRef, private domusService: DomusService) {
+  constructor(private el: ElementRef, private domusService: DomusService, private router: Router) {
     this.resizeHandler = this.debounce(() => this.equalizeCardHeights(), 120);
-    this.domusService.getProperties().subscribe((response: PaginatedResponse<Property>) => {
-      this.properties = response.data.map(p => ({ ...p, currentImageIndex: 0, images: [p.image1, p.image2, p.image3] }));
-    });
+    this.domusService.getProperties()
+      .pipe(finalize(() => this.isLoadingProperties = false))
+      .subscribe({
+        next: (response: PaginatedResponse<Property>) => {
+          this.properties = response.data.map(p => ({ ...p, currentImageIndex: 0, images: [p.image1, p.image2, p.image3] }));
+          setTimeout(() => this.equalizeCardHeights(), 0);
+        },
+        error: (error) => {
+          console.error('Error al cargar inmuebles en habilidades:', error);
+          this.properties = [];
+        }
+      });
   }
 
   // filtros del formulario
@@ -107,6 +143,12 @@ export class HabilidadesComponent implements AfterViewInit, OnDestroy {
       return property.images[property.currentImageIndex];
     }
     return '';
+  }
+
+  // Navegar a la vista de detalles de la propiedad
+  public viewPropertyDetail(property: Property, event: Event): void {
+    event.preventDefault();
+    this.router.navigate(['/propiedad', property.idpro]);
   }
 
   ngAfterViewInit(): void {

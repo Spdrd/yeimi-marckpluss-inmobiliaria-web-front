@@ -86,9 +86,16 @@
 
     <!-- RESULTADOS: TARJETAS DE PROPIEDADES -->
     <section class="skills-section">
+      <div class="properties-loading" *ngIf="isLoadingProperties" role="status" aria-live="polite">
+        <div class="properties-loading-inner">
+          <span class="properties-loading-spinner" aria-hidden="true"></span>
+          <p>Cargando inmuebles...</p>
+        </div>
+      </div>
+
       <div class="skills-grid">
 
-        <div class="card property-card" *ngFor="let p of filteredProperties">
+        <div class="card property-card" *ngFor="let p of paginatedProperties">
           <div class="property-image" [style.backgroundImage]="'url(' + getCurrentImage(p) + ')'">
             <div class="ribbon">{{ p.type }}</div>
             <div class="price-badge">${{ p.price_format }}</div>
@@ -106,7 +113,7 @@
 
               <!-- Indicador de fotos -->
               <div class="image-indicator">
-                <span class="current-image">{{ p.currentImageIndex + 1 }}</span>
+                <span class="current-image">{{ (p.currentImageIndex ?? 0) + 1 }}</span>
                 <span class="separator">/</span>
                 <span class="total-images">{{ p.images.length }}</span>
               </div>
@@ -131,14 +138,28 @@
                   class="stat-value">{{ p.bathrooms }}</span></span>
             </div>
             <div class="card-actions">
-              <a class="btn-buy" href="#" (click)="$event.preventDefault()">Ver detalle</a>
+              <a class="btn-buy" href="#" (click)="viewPropertyDetail(p, $event)">
+                Ver detalle
+              </a>
               <button (click)="enviarWhatsApp(p)" class="btn-secondary" type="button">
-                Consultar esta propiedad
+                <i class="fab fa-whatsapp"></i>
+                Preguntar por esta propiedad
               </button>
             </div>
           </div>
         </div>
 
+      </div>
+      <div class="pagination">
+        <button (click)="prevPage()" [disabled]="page === 1">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+
+        <span>Página {{ page }} de {{ totalPages }}</span>
+
+        <button (click)="nextPage()" [disabled]="page === totalPages">
+          <i class="fas fa-chevron-right"></i>
+        </button>
       </div>
     </section>
   </div>
