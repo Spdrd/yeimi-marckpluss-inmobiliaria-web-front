@@ -13,7 +13,7 @@ import { finalize } from 'rxjs/operators';
 export class HabilidadesComponent implements AfterViewInit, OnDestroy {
 
   page = 1;
-  pageSize = 3;
+  pageSize = 6;
 
   get paginatedProperties(): Property[] {
     const start = (this.page - 1) * this.pageSize;
