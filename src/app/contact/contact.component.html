@@ -17,7 +17,7 @@
       </div>
 
       <div class="social-links">
-        <a [href]="social.url" target="_blank" class="social-link" *ngFor="let social of socialLinks">
+        <a [href]="social.url" target="_blank" class="social-link" [ngClass]="social.network" *ngFor="let social of socialLinks">
           <i [class]="social.icon"></i>
         </a>
       </div>

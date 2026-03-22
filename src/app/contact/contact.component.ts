@@ -16,9 +16,9 @@ export class ContactComponent {
   ];
 
   socialLinks = [
-    { icon: 'fab fa-whatsapp', url: '' },
-    { icon: 'fab fa-instagram', url: '' },
-    { icon: 'fab fa-tiktok', url: '' },
-    { icon: 'fas fa-at', url: 'mailto:' },
+    { icon: 'fab fa-whatsapp', url: '', network: 'social-whatsapp' },
+    { icon: 'fab fa-instagram', url: '', network: 'social-instagram' },
+    { icon: 'fab fa-tiktok', url: '', network: 'social-tiktok' },
+    { icon: 'fas fa-at', url: 'mailto:', network: 'social-email' },
   ];
 }
