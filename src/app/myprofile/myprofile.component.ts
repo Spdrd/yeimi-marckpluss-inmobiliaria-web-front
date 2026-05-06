@@ -7,6 +7,8 @@ import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 })
 export class MyprofileComponent implements OnInit, OnDestroy {
   
+  // 🌟 Altura de la portada principal (en vh)
+  heroHeightVh: number = 60;
 
   // 🌟 Palabras dinámicas
   words: string[] = [

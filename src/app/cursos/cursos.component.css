@@ -1,5 +1,5 @@
 /* ============================= */
-/* COURSES - CAROUSEL */
+/* COURSES - CAROUSEL 4 COLUMNAS */
 /* ============================= */
 
 .filler {
@@ -18,23 +18,12 @@
   overflow: hidden;
 }
 
-/* === CAROUSEL === */
-
-.carousel-container {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
 .carousel {
   width: 100%;
   max-width: 1500px;
   overflow: hidden;
   position: relative;
-  margin-left: clamp(18px, 4.2vw, 78px);
-  margin-right: clamp(18px, 4.2vw, 78px);
+  margin: 0 auto;
   touch-action: pan-y;
   -webkit-user-select: none;
   user-select: none;
@@ -42,7 +31,8 @@
 
 .carousel-track {
   display: flex;
-  gap: 14px;
+  /* El gap viene siempre del JS via CSS custom property */
+  gap: var(--carousel-gap, 14px);
   transition: transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   will-change: transform;
 }
@@ -65,7 +55,7 @@
   justify-content: center;
 }
 
-.carousel-btn.left { left: 10px; }
+.carousel-btn.left  { left: 10px; }
 .carousel-btn.right { right: 10px; }
 
 /* === ARROW === */
@@ -129,16 +119,13 @@
 .carousel-btn.right .arrow { transform: rotate(0deg); }
 
 /* === CARD === */
-/*
-  Fórmula: (100% - gaps) / 4 tarjetas
-  gaps = 3 gaps × 14px = 42px
-  → cada card = calc((100% - 42px) / 4)
-*/
 
 .card {
   position: relative;
-  flex: 0 0 calc((100% - 42px) / 4);
-  width: calc((100% - 42px) / 4);
+  /* El ancho viene siempre del JS via CSS custom property */
+  flex: 0 0 var(--card-width);
+  width: var(--card-width);
+  min-width: var(--card-width);
   display: flex;
   flex-direction: column;
   border-radius: 18px;
@@ -154,14 +141,10 @@
 
 .card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(0,0,0,0.22);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.22);
 }
 
 /* === TOP SECTION (IMAGE) === */
-/*
-  aspect-ratio 16/10 → más horizontal que el cuadrado 1/1 anterior,
-  sin recortar ni distorsionar gracias a object-fit: cover
-*/
 
 .card .top-section {
   width: 100%;
@@ -258,7 +241,7 @@
   display: block;
   width: 100%;
   height: 1px;
-  background: rgba(0,0,0,0.05);
+  background: rgba(0, 0, 0, 0.05);
   margin-bottom: 10px;
 }
 
@@ -380,26 +363,15 @@
   100% { top: 0; }
 }
 
-/* === RESPONSIVE — siempre 4 tarjetas === */
+/* =============================================
+   RESPONSIVE — gap controlado por JS,
+   solo ajustamos padding y detalles visuales
+   ============================================= */
 
 @media (max-width: 1024px) {
   .courses-section {
     padding: clamp(18px, 2.6vh, 28px) 0 clamp(32px, 5vh, 52px) 0;
   }
-
-  /* Reducimos márgenes laterales para ganar espacio */
-  .carousel {
-    margin-left: clamp(10px, 2vw, 40px);
-    margin-right: clamp(10px, 2vw, 40px);
-  }
-
-  /* 4 cards con gap de 10px → 3 gaps = 30px */
-  .card {
-    flex: 0 0 calc((100% - 30px) / 4);
-    width: calc((100% - 30px) / 4);
-  }
-
-  .carousel-track { gap: 10px; }
 }
 
 @media (max-width: 768px) {
@@ -407,23 +379,8 @@
     padding: clamp(14px, 2.2vh, 22px) 0 clamp(24px, 4vh, 40px) 0;
   }
 
-  .carousel {
-    margin-left: 8px;
-    margin-right: 8px;
-  }
-
-  /* Ocultamos botones en móvil pero mantenemos 4 cards */
   .carousel-btn { display: none; }
 
-  /* 4 cards con gap de 8px → 3 gaps = 24px */
-  .card {
-    flex: 0 0 calc((100% - 24px) / 4);
-    width: calc((100% - 24px) / 4);
-  }
-
-  .carousel-track { gap: 8px; }
-
-  /* Textos más pequeños en pantallas reducidas */
   .card .bottom-section {
     padding: 8px 10px;
   }
@@ -454,24 +411,10 @@
     padding: clamp(10px, 2vh, 18px) 0 clamp(20px, 3.5vh, 32px) 0;
   }
 
-  .carousel {
-    margin-left: 6px;
-    margin-right: 6px;
-  }
-
-  /* 4 cards con gap de 6px → 3 gaps = 18px */
-  .card {
-    flex: 0 0 calc((100% - 18px) / 4);
-    width: calc((100% - 18px) / 4);
-  }
-
-  .carousel-track { gap: 6px; }
-
   .card .bottom-section {
     padding: 6px 8px;
   }
 
-  /* En pantallas muy pequeñas ocultamos desc para no colapsar */
   .card .bottom-section .desc {
     display: none;
   }
