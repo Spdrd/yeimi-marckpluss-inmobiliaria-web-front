@@ -24,7 +24,7 @@ export class StatesComponent implements AfterViewInit, OnDestroy {
 
   readonly stats: StatItem[] = [
     {
-      title: 'Buen Servicio',
+      title: 'Servicio y Acompañamiento',
       icon: 'fas fa-hand-holding-heart',
       color: 'var(--color-main2)',
       text: 'Excelencia y profesionalismo.',
