@@ -57,6 +57,11 @@ export class HabilidadesComponent implements AfterViewInit, OnDestroy {
       .subscribe({
         next: (response: PaginatedResponse<Property>) => {
           this.properties = response.data.map(p => ({ ...p, currentImageIndex: 0, images: [p.image1, p.image2, p.image3] }));
+          const cities = [...new Set(response.data.map(p => p.city).filter(c => c))];
+          this.cityOptions = [
+            { value: '', label: 'Todas las ciudades' },
+            ...cities.map(c => ({ value: c, label: c }))
+          ];
           setTimeout(() => this.equalizeCardHeights(), 0);
         },
         error: (error) => {
@@ -77,8 +82,10 @@ export class HabilidadesComponent implements AfterViewInit, OnDestroy {
     maxPrice: null
   };
 
-  // Estado del dropdown
+  // Estado de los dropdowns
   public isTypeDropdownOpen = false;
+  public isCityDropdownOpen = false;
+  public cityOptions: { value: string; label: string }[] = [];
   public typeOptions = [
     { value: '', label: 'Cualquier tipo' },
     { value: 'APARTAMENTO', label: 'Apartamento' },
@@ -117,9 +124,24 @@ export class HabilidadesComponent implements AfterViewInit, OnDestroy {
     return selected ? selected.label : 'Cualquier tipo';
   }
 
+  public toggleCityDropdown() {
+    this.isCityDropdownOpen = !this.isCityDropdownOpen;
+  }
+
+  public selectCity(value: string) {
+    this.filters.city = value;
+    this.isCityDropdownOpen = false;
+  }
+
+  public getCityLabel() {
+    const selected = this.cityOptions.find(opt => opt.value === this.filters.city);
+    return selected ? selected.label : 'Todas las ciudades';
+  }
+
   public resetFilters() {
     this.filters = { biz: this.filters.biz, city: '', type: '', bedrooms: null, bathrooms: null, minPrice: null, maxPrice: null };
     this.isTypeDropdownOpen = false;
+    this.isCityDropdownOpen = false;
   }
 
   // Navegación de imágenes en las tarjetas

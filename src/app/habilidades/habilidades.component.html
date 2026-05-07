@@ -31,7 +31,18 @@
         <form class="filters-form" (ngSubmit)="$event.preventDefault()">
           <div class="filter-group">
             <label><i class="fas fa-map-marker-alt"></i> Ciudad</label>
-            <input type="text" placeholder="Ej: Bogotá" [(ngModel)]="filters.city" name="city">
+            <div class="custom-select">
+              <button class="select-trigger" type="button" (click)="toggleCityDropdown()">
+                <span>{{ getCityLabel() }}</span>
+                <i class="fas fa-chevron-down"></i>
+              </button>
+              <div class="select-dropdown" *ngIf="isCityDropdownOpen">
+                <button type="button" class="select-option" *ngFor="let option of cityOptions"
+                  [class.active]="filters.city === option.value" (click)="selectCity(option.value)">
+                  {{ option.label }}
+                </button>
+              </div>
+            </div>
           </div>
 
           <div class="filter-group">
