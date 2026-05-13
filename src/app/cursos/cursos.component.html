@@ -2,6 +2,12 @@
 <div class="filler"></div>
 <div class="courses-section" id="cursos">
 
+  <div class="cursos-social-links">
+    <a [href]="social.url" target="_blank" class="social-link" [ngClass]="social.network" *ngFor="let social of socialLinks">
+      <i [class]="social.icon"></i>
+    </a>
+  </div>
+
   <button class="carousel-btn left" (click)="prevSlide()">
     <div class="arrow">
       <div class="arrow-top"></div>
