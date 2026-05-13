@@ -12,7 +12,7 @@ export class TechComponent implements AfterViewInit {
   // Valores de la empresa (usados por el template actualizado)
   companyValues = [
     {
-      title: 'Buen Servicio',
+      title: 'Servicio y acompañamiento',
       icon: 'fas fa-hand-holding-heart',
       color: 'var(--color-title)',
       text: 'Excelencia y profesionalismo.'
