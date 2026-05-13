@@ -9,6 +9,14 @@ import { DomusService } from '../core/service/domus.service';
 export class CursosComponent implements OnInit, OnDestroy, AfterViewInit {
   estate: any[] = [];
 
+  socialLinks = [
+    { icon: 'fab fa-whatsapp', url: 'https://wa.me/573204795284', network: 'social-whatsapp' },
+    { icon: 'fab fa-instagram', url: 'https://www.instagram.com/marckplussinmobiliaria?igsh=OTU4NWtsMWljaXB4&utm_source=qr', network: 'social-instagram' },
+    { icon: 'fab fa-tiktok', url: 'https://www.tiktok.com/@inmueblesmarckpluss', network: 'social-tiktok' },
+    { icon: 'fas fa-at', url: 'mailto:marckpluss@gmail.com', network: 'social-email-light' },
+    { icon: 'fab fa-facebook', url: 'https://www.facebook.com/profile.php?id=100064359720558&locale=es_ES', network: 'social-email' }
+  ];
+
   currentIndex = 0;
   visibleCards = 4;
   cardWidth = 0;
