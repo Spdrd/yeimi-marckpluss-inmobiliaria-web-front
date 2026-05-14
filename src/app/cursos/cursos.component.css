@@ -22,6 +22,7 @@
   display: flex;
   gap: 12px;
   z-index: 10;
+  align-items: flex-start;
 }
 
 .cursos-social-links .social-link {
@@ -29,13 +30,27 @@
   align-items: center;
   justify-content: center;
   width: 40px;
-  height: 40px;
+  height: 46px;
   background: var(--color-title);
-  border-radius: 50%;
+  border-radius: 0 0 14px 14px;
   color: var(--color-text2);
   text-decoration: none;
   font-size: 1.15rem;
   transition: all 0.3s ease;
+  position: relative;
+}
+
+.cursos-social-links .social-link::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 10px;
+  background: inherit;
+  border-radius: 3px 3px 0 0;
+  transition: background 0.3s ease;
 }
 
 .cursos-social-links .social-link.social-whatsapp {
@@ -440,8 +455,14 @@
 
   .cursos-social-links .social-link {
     width: 34px;
-    height: 34px;
+    height: 38px;
     font-size: 1rem;
+  }
+
+  .cursos-social-links .social-link::before {
+    width: 6px;
+    height: 8px;
+    top: -8px;
   }
 
   .card .bottom-section {
@@ -482,8 +503,14 @@
 
   .cursos-social-links .social-link {
     width: 28px;
-    height: 28px;
+    height: 32px;
     font-size: 0.85rem;
+  }
+
+  .cursos-social-links .social-link::before {
+    width: 5px;
+    height: 7px;
+    top: -7px;
   }
 
   .card .bottom-section {
