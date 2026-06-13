@@ -27,7 +27,7 @@ export class HeaderTopComponent implements OnInit {
   goToHome(event: Event) {
     event.preventDefault();
     this.activeTab = 'Inicio';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    this.smoothScrollTo(0);
   }
 
   ngOnInit() {
@@ -40,6 +40,62 @@ export class HeaderTopComponent implements OnInit {
     this.isMobile = window.innerWidth < 768;
   }
 
+  // Alto real del header fijo (para no aterrizar tapado por la barra)
+  private getHeaderOffset(): number {
+    const navbar = document.querySelector('.tubelight-navbar') as HTMLElement | null;
+    const navbarHeight = navbar ? navbar.offsetHeight : 100;
+    return navbarHeight + 16; // pequeño margen de respiro
+  }
+
+  private scrollAnimationId: number | null = null;
+
+  /**
+   * Scroll suave propio con requestAnimationFrame.
+   * Escribe scrollTop directamente para ser fiable sin importar
+   * si el elemento que hace scroll es <html> o <body>, ni el CSS scroll-behavior.
+   */
+  private smoothScrollTo(targetY: number, duration = 750): void {
+    const scroller = (document.scrollingElement || document.documentElement) as HTMLElement;
+    const startY = scroller.scrollTop;
+    const maxY = scroller.scrollHeight - window.innerHeight;
+    const destY = Math.max(0, Math.min(targetY, maxY));
+    const distance = destY - startY;
+
+    if (Math.abs(distance) < 2) {
+      scroller.scrollTop = destY;
+      return;
+    }
+
+    // Cancela cualquier animación de scroll en curso
+    if (this.scrollAnimationId !== null) {
+      cancelAnimationFrame(this.scrollAnimationId);
+    }
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) {
+      scroller.scrollTop = destY;
+      return;
+    }
+
+    const startTime = performance.now();
+    const easeInOutCubic = (t: number) =>
+      t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+    const step = (now: number) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      scroller.scrollTop = startY + distance * easeInOutCubic(progress);
+
+      if (progress < 1) {
+        this.scrollAnimationId = requestAnimationFrame(step);
+      } else {
+        this.scrollAnimationId = null;
+      }
+    };
+
+    this.scrollAnimationId = requestAnimationFrame(step);
+  }
+
   setActiveTab(name: string, event: Event) {
     event.preventDefault();
     this.activeTab = name;
@@ -47,18 +103,13 @@ export class HeaderTopComponent implements OnInit {
     if (item) {
       const id = item.url.replace('#', '');
       if (id === '') {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        this.smoothScrollTo(0);
       } else {
         const element = document.getElementById(id);
         if (element) {
-          const headerOffset = 100;
           const elementPosition = element.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: "smooth"
-          });
+          const offsetPosition = elementPosition + window.pageYOffset - this.getHeaderOffset();
+          this.smoothScrollTo(offsetPosition);
         }
       }
     }
@@ -88,7 +139,7 @@ export class HeaderTopComponent implements OnInit {
       return document.getElementById(id);
     });
 
-    const scrollPosition = window.scrollY + 100; // Offset for header height
+    const scrollPosition = window.scrollY + this.getHeaderOffset() + 20; // Offset real del header
 
     for (let i = sections.length - 1; i >= 0; i--) {
       const section = sections[i];

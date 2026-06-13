@@ -5,9 +5,6 @@
   <!-- Sidebar (Desktop/Tablet con scroll) -->
   <app-header *ngIf="!showTopHeader && !isMobile" [class.slide-in]="!showTopHeader"></app-header>
 
-  <!-- 📱 Pestaña lateral en móviles -->
-  <div *ngIf="isMobile" class="sidebar-tab" (click)="toggleSidebar()">☰</div>
-
   <!-- Overlay borroso -->
   <div *ngIf="sidebarOpen" class="overlay" (click)="toggleSidebar()"></div>
 
