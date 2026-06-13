@@ -30,6 +30,10 @@
 
 
 /* You can add global styles to this file, and also import other style files */
+html {
+  scroll-behavior: smooth;
+}
+
 html,
 body {
   margin: 0;
@@ -39,6 +43,12 @@ body {
   background-color: #06050e;
   font-family: var(--font-text);
   /* Global text font */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 h1,

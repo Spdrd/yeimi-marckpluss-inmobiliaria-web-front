@@ -264,22 +264,49 @@
 
 @media (max-width: 768px) {
   .navbar-inner {
-    min-height: clamp(94px, 12.2vh, 122px);
-    height: clamp(94px, 12.2vh, 122px);
-    padding: 0.05rem clamp(0.6rem, 4vw, 1.1rem);
+    min-height: clamp(64px, 10vh, 88px);
+    height: clamp(64px, 10vh, 88px);
+    padding: 0.05rem clamp(0.5rem, 3vw, 1rem);
   }
 
+  /* Logo central proporcionado para que quepan los 4 iconos */
   .mobile-logo .lion-logo {
-    height: clamp(96px, 12.4vh, 128px);
+    height: clamp(48px, 9vw, 70px);
+  }
+
+  /* Distribución mobile sin gap fijo grande: deja respirar a los iconos */
+  .mobile-nav-layout {
+    gap: clamp(0.4rem, 2vw, 0.9rem);
   }
 
   .mobile-nav-layout .nav-item {
-    font-size: clamp(1rem, 3.8vw, 1.2rem);
-    padding: 0.38rem;
+    font-size: clamp(0.95rem, 4.2vw, 1.2rem);
+    padding: 0.35rem clamp(0.3rem, 1.6vw, 0.55rem);
   }
 
   .mobile-nav-left,
   .mobile-nav-right {
-    gap: clamp(0.55rem, 2.8vw, 1rem);
+    gap: clamp(0.3rem, 2vw, 0.8rem);
+  }
+}
+
+/* Pantallas muy estrechas: máxima compresión para no recortar iconos */
+@media (max-width: 380px) {
+  .mobile-logo .lion-logo {
+    height: 46px;
+  }
+
+  .mobile-nav-layout {
+    gap: 0.3rem;
+  }
+
+  .mobile-nav-left,
+  .mobile-nav-right {
+    gap: 0.15rem;
+  }
+
+  .mobile-nav-layout .nav-item {
+    font-size: 1rem;
+    padding: 0.3rem 0.25rem;
   }
 }

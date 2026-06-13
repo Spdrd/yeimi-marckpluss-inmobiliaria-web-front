@@ -472,10 +472,16 @@
 }
 
 @media (max-width: 640px) {
+  /* El hero crece con su contenido: nada se recorta en pantallas pequeñas */
   .myprofile {
+    height: auto;
     min-height: calc(var(--hero-height, 45vh) * 0.875);
-    height: calc(var(--hero-height, 45vh) * 0.875);
-    max-height: calc(var(--hero-height, 45vh) * 0.875);
+    max-height: none;
+  }
+
+  .overlay {
+    padding-top: clamp(72px, 14vh, 120px);
+    padding-bottom: clamp(28px, 5vh, 48px);
   }
 
   .intro-text {
@@ -486,5 +492,9 @@
   .texto-portada {
     font-size: clamp(0.95rem, 3.6vw, 1.3rem);
     margin-top: 4px;
+  }
+
+  .cta-area {
+    margin-bottom: clamp(20px, 4vh, 40px);
   }
 }
