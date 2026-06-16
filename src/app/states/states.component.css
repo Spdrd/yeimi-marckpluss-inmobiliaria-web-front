@@ -1,22 +1,25 @@
 /* === SECCION ESTADISTICAS / VALORES === */
 .tech-section {
   text-align: center;
-  padding: 56px 22px;
-  background: var(--color-text2);
-  min-height: 420px;
+  padding: 80px 22px;
+  background:
+    radial-gradient(circle at 50% -10%, rgba(105, 20, 32, 0.06), transparent 55%),
+    linear-gradient(180deg, #ffffff 0%, #f7f3f4 100%);
   position: relative;
   overflow: hidden;
 }
 
+/* Halos decorativos sutiles (ahora visibles sobre fondo claro) */
 .tech-section::before {
   content: '';
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 12% 18%, rgba(255, 255, 255, 0.14), transparent 42%),
-    radial-gradient(circle at 84% 26%, rgba(255, 255, 255, 0.1), transparent 45%),
-    radial-gradient(circle at 42% 95%, rgba(255, 255, 255, 0.08), transparent 50%);
+    radial-gradient(circle at 12% 18%, rgba(157, 30, 47, 0.07), transparent 42%),
+    radial-gradient(circle at 84% 26%, rgba(52, 13, 16, 0.06), transparent 45%),
+    radial-gradient(circle at 42% 105%, rgba(105, 20, 32, 0.06), transparent 50%);
   z-index: 0;
+  pointer-events: none;
 }
 
 .tech-section > * {
@@ -25,14 +28,26 @@
 }
 
 .section-title2 {
-  font-size: 1.7rem;
+  font-family: var(--font-title);
+  font-size: 2.1rem;
   font-weight: 900;
-  color: var(--color-main2);
-  margin: 60px 0 44px;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  font-family: var(--font-main);
+  color: var(--color-main);
+  margin: 0 auto 56px;
+  max-width: 640px;
+  line-height: 1.2;
+  letter-spacing: 0.5px;
   animation: fadeInDown 0.9s ease forwards;
+}
+
+/* Filete decorativo bajo el título */
+.section-title2::after {
+  content: '';
+  display: block;
+  width: 72px;
+  height: 4px;
+  margin: 18px auto 0;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--color-main2), var(--color-main3));
 }
 
 .stats-grid {
@@ -40,7 +55,7 @@
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(3, minmax(220px, 1fr));
-  gap: 28px;
+  gap: 36px;
   align-items: start;
 }
 
@@ -53,12 +68,12 @@
   animation: riseIn 0.7s ease forwards;
 }
 
-.stat-item:nth-child(2) { animation-delay: 0.1s; }
-.stat-item:nth-child(3) { animation-delay: 0.2s; }
+.stat-item:nth-child(2) { animation-delay: 0.12s; }
+.stat-item:nth-child(3) { animation-delay: 0.24s; }
 
 .circle-shell {
-  width: 260px;
-  height: 260px;
+  width: 240px;
+  height: 240px;
   position: relative;
   display: grid;
   place-items: center;
@@ -68,28 +83,31 @@
   width: 100%;
   height: 100%;
   transform: rotate(-90deg);
-  filter: drop-shadow(0 8px 22px rgba(0, 0, 0, 0.22));
+  filter: drop-shadow(0 10px 22px rgba(105, 20, 32, 0.18));
 }
 
 .circle-track {
-  fill: rgba(255, 255, 255, 0.04);
-  stroke: rgba(255, 255, 255, 0.12);
-  stroke-width: 14; /* Un poco más delgado para elegancia */
+  fill: none;
+  stroke: rgba(105, 20, 32, 0.1);
+  stroke-width: 12;
 }
 
 .circle-meter {
   fill: none;
-  stroke-width: 14;
+  stroke-width: 12;
   stroke-linecap: round;
   transition: stroke-dashoffset 0.1s linear;
 }
 
 .circle-center {
   position: absolute;
-  inset: 40px;
+  inset: 38px;
   border-radius: 50%;
-  background: radial-gradient(circle at 36% 32%, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.04));
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1), 0 14px 26px rgba(0, 0, 0, 0.2);
+  background:
+    radial-gradient(circle at 36% 30%, #ffffff 0%, #fbf7f7 70%, #f3eaeb 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(105, 20, 32, 0.08),
+    0 16px 30px rgba(52, 13, 16, 0.12);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -98,34 +116,40 @@
   text-align: center;
 }
 
-/* --- ESTILOS NUEVOS PARA ICONOS --- */
 .stat-icon {
   font-size: 2.8rem;
   color: var(--color-main2);
-  margin-bottom: 10px;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+  margin-bottom: 12px;
+  filter: drop-shadow(0 4px 8px rgba(105, 20, 32, 0.25));
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.stat-item:hover .stat-icon {
+  transform: scale(1.12) translateY(-2px);
 }
 
 .stat-title-inner {
-  font-size: 0.85rem;
+  font-family: var(--font-subtitle);
+  font-size: 0.82rem;
   font-weight: 800;
-  color: var(--color-text);
+  color: var(--color-main);
   text-transform: uppercase;
   margin: 0;
-  line-height: 1.2;
+  line-height: 1.25;
   letter-spacing: 1px;
 }
 
 .value-text {
   max-width: 260px;
-  font-size: 0.95rem;
-  color: rgba(255,255,255,0.8);
-  margin-top: 20px;
+  font-family: var(--font-text);
+  font-size: 0.98rem;
+  color: var(--color-text);
+  margin-top: 24px;
   text-align: center;
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
-/* --- ANIMACIONES Y RESPONSIVE (Mantenidos) --- */
+/* --- ANIMACIONES --- */
 @keyframes fadeInDown {
   from { opacity: 0; transform: translateY(-28px); }
   to { opacity: 1; transform: translateY(0); }
@@ -136,8 +160,18 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .section-title2,
+  .stat-item {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @media (max-width: 768px) {
-  .stats-grid { grid-template-columns: 1fr; gap: 40px; }
+  .stats-grid { grid-template-columns: 1fr; gap: 48px; }
   .circle-shell { width: 220px; height: 220px; }
-  .stat-icon { font-size: 2.2rem; }
+  .stat-icon { font-size: 2.3rem; }
+  .section-title2 { font-size: 1.7rem; }
 }

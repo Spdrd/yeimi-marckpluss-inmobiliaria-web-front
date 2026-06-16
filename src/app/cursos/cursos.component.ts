@@ -224,10 +224,19 @@ export class CursosComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @HostListener('window:resize')
   updateVisibleCards(): void {
-    this.visibleCards = 4;
+    this.visibleCards = this.getVisibleCardsForWidth();
     this.calculateCardWidth();
     this.setupSlides();
     this.updateTranslate(false);
+  }
+
+  // Número de tarjetas visibles según el ancho de pantalla
+  private getVisibleCardsForWidth(): number {
+    const width = typeof window !== 'undefined' ? window.innerWidth : 1280;
+    if (width <= 560) return 1;
+    if (width <= 860) return 2;
+    if (width <= 1200) return 3;
+    return 4;
   }
 
   // ─── PÚBLICO para usarlo en el template con [style.--carousel-gap] ───
@@ -243,8 +252,9 @@ export class CursosComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.carouselRef) {
       const carouselWidth = this.carouselRef.nativeElement.clientWidth;
       const gap = this.getGapForCurrentWidth();
-      // 4 cards visibles + 3 gaps entre ellas
-      this.cardWidth = (carouselWidth - 3 * gap) / 4;
+      const n = this.visibleCards || 1;
+      // n cards visibles + (n - 1) gaps entre ellas
+      this.cardWidth = (carouselWidth - (n - 1) * gap) / n;
     }
   }
 
@@ -255,7 +265,8 @@ export class CursosComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (this.carouselRef) {
       const carouselWidth = this.carouselRef.nativeElement.clientWidth;
-      return (carouselWidth - 3 * gap) / 4 + gap;
+      const n = this.visibleCards || 1;
+      return (carouselWidth - (n - 1) * gap) / n + gap;
     }
     return 0;
   }
